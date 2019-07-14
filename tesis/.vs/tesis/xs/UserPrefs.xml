@@ -1,32 +1,24 @@
-﻿<Properties StartupConfiguration="{59C8D72F-3B81-23D9-CE59-FF2E9F504908}|Unit Tests">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ObstaclesGenerator.cs">
+﻿<Properties StartupConfiguration="{59C8D72F-3B81-23D9-CE59-FF2E9F504908}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/FloorController.cs">
     <Files>
-      <File FileName="Assets/Scripts/ObstaclesGenerator.cs" Line="17" Column="17" />
+      <File FileName="Assets/Scripts/BlackController.cs" Line="9" Column="57" />
+      <File FileName="Assets/Scripts/MenuManager.cs" />
+      <File FileName="Assets/Scripts/ScrollerController.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/CamController.cs" Line="10" Column="26" />
+      <File FileName="Assets/Scripts/MainCharacterController.cs" Line="9" Column="51" />
+      <File FileName="Assets/Scripts/FloorController.cs" Line="21" Column="6" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="tesis" expanded="True">
-            <Node name="Assembly-CSharp" expanded="True">
-              <Node name="Assets" expanded="True">
-                <Node name="Scripts" expanded="True">
-                  <Node name="ObstaclesGenerator.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="tesis" expanded="True" selected="True" />
+          <Node name="tesis" expanded="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e9f027b7-2147-47b0-9ce4-56a9e294d012" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

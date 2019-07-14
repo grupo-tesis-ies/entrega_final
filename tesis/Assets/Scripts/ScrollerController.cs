@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnotherScroller : MonoBehaviour
+public class ScrollerController : MonoBehaviour
 {
     public float scrollSpeed;
     public float tileSizeY;
