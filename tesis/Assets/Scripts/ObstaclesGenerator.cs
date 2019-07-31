@@ -5,15 +5,27 @@ using UnityEngine;
 public class ObstaclesGenerator : MonoBehaviour
 {
     public GameObject[] obstacles;
+    public GameObject coin;
+    public float instantiateTime;
 
-    // Start is called before the first frame update
-    void Start()
+    public void StartPlaying()
     {
-        InvokeRepeating("InstantiateObs", 0.5f, 1f);
+        InvokeRepeating("InstantiateObs", instantiateTime, 1f);
+        Invoke("InstantiateCoin", .5f);
     }
 
     void InstantiateObs()
     {
+        int index = (int) Random.Range(0, 11.5f);
+        Instantiate(obstacles[index]);
         
+    }
+
+    void InstantiateCoin()
+    {
+        float randomTime = Random.Range(1.5f, 2.5f);
+        Instantiate(coin);
+        coin.transform.position = new Vector3(Random.Range(-0.8f, 0.8f), 2.5f, coin.transform.position.z);
+        Invoke("InstantiateCoin", randomTime);
     }
 }

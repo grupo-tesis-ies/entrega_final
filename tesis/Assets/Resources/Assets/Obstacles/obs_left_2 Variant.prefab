@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &4641816385729537650
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2344135052776187265}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9.46, y: 6.62, z: 8}
+  m_Center: {x: 5, y: 2.38, z: 1}
+--- !u!114 &-5509899096288023278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2344135052776187265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71edf144d7ad40c6a966209aa472329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleSpeed: 2
 --- !u!1001 &6028604110071889032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +36,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 53d757dacc6d6664f8001ad527d2852b,
         type: 3}
       propertyPath: m_Name
-      value: obs_left_2
+      value: obs_left_2 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 53d757dacc6d6664f8001ad527d2852b,
+        type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 53d757dacc6d6664f8001ad527d2852b,
         type: 3}
@@ -25,7 +56,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 53d757dacc6d6664f8001ad527d2852b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 53d757dacc6d6664f8001ad527d2852b,
         type: 3}
@@ -89,3 +120,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8bfc978c9cc8bfb479559d945ac960b4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53d757dacc6d6664f8001ad527d2852b, type: 3}
+--- !u!1 &2344135052776187265 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 53d757dacc6d6664f8001ad527d2852b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6028604110071889032}
+  m_PrefabAsset: {fileID: 0}

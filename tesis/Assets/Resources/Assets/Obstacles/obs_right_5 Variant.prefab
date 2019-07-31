@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!65 &1895675516764859488
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6209060069074876579}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 13.499315, y: 5.26, z: 8}
+  m_Center: {x: 5.9244385, y: 0.35, z: 1}
+--- !u!114 &7120236390720032876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6209060069074876579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b71edf144d7ad40c6a966209aa472329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleSpeed: 2
 --- !u!1001 &2669207594136658346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10,7 +36,12 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: 3a947e636ef41024fa4f9de082968850,
         type: 3}
       propertyPath: m_Name
-      value: obs_right_5
+      value: obs_right_5 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 3a947e636ef41024fa4f9de082968850,
+        type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3a947e636ef41024fa4f9de082968850,
         type: 3}
@@ -25,7 +56,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: 3a947e636ef41024fa4f9de082968850,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 3a947e636ef41024fa4f9de082968850,
         type: 3}
@@ -89,3 +120,9 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8bfc978c9cc8bfb479559d945ac960b4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a947e636ef41024fa4f9de082968850, type: 3}
+--- !u!1 &6209060069074876579 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 3a947e636ef41024fa4f9de082968850,
+    type: 3}
+  m_PrefabInstance: {fileID: 2669207594136658346}
+  m_PrefabAsset: {fileID: 0}

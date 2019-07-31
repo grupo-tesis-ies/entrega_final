@@ -1,24 +1,34 @@
 ﻿<Properties StartupConfiguration="{59C8D72F-3B81-23D9-CE59-FF2E9F504908}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/FloorController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CamController.cs">
     <Files>
-      <File FileName="Assets/Scripts/BlackController.cs" Line="9" Column="57" />
-      <File FileName="Assets/Scripts/MenuManager.cs" />
-      <File FileName="Assets/Scripts/ScrollerController.cs" Line="7" Column="1" />
-      <File FileName="Assets/Scripts/CamController.cs" Line="10" Column="26" />
-      <File FileName="Assets/Scripts/MainCharacterController.cs" Line="9" Column="51" />
-      <File FileName="Assets/Scripts/FloorController.cs" Line="21" Column="6" />
+      <File FileName="Assets/Scripts/BlackController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MenuManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CamController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MainCharacterController.cs" />
+      <File FileName="Assets/Scripts/FloorController.cs" />
+      <File FileName="Assets/Scripts/ObstaclesGenerator.cs" />
+      <File FileName="Assets/Scripts/ObstacleController.cs" />
+      <File FileName="Assets/Scripts/ScrollerController.cs" />
+      <File FileName="Assets/Scripts/GarbageCollector.cs" />
+      <File FileName="Assets/Scripts/SwipeMove.cs" />
+      <File FileName="Assets/Scripts/CoinController.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="tesis" expanded="True" />
+          <Node name="tesis" expanded="True" selected="True" />
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="tesis" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e9f027b7-2147-47b0-9ce4-56a9e294d012" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="0a09a4cb-e3c1-4def-9a6a-d5e0e5f51e2d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
