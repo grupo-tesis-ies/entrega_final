@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5211721414978337695
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5211721414978337693}
+  - component: {fileID: 5211721414978337694}
+  m_Layer: 0
+  m_Name: Obstacles Generator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5211721414978337693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5211721414978337695}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5211721414978337694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5211721414978337695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f1f8f7806bf44dfa87b619c241888ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacles:
+  - {fileID: 3557575180756373234, guid: 3e676a423927d4ec987d85f13180db95, type: 3}
+  - {fileID: 2344135052776187265, guid: 0fbd01e707e544ae2b5d5f69c553a134, type: 3}
+  - {fileID: 1065773273247154698, guid: 156ee86cf218c48cc9fadc24539cb4fe, type: 3}
+  - {fileID: 7052438970240482552, guid: 052d452c834cb44c0b383155441bc994, type: 3}
+  - {fileID: 7662256004408633261, guid: c00dd3a5d3a2d49ceb992eec24d6c569, type: 3}
+  - {fileID: 1777144093915912510, guid: 7d1e23fe8ae6348128f03cb11d4c691e, type: 3}
+  - {fileID: 8454041973294411471, guid: 59a522c925ea8405a8072088b7d02694, type: 3}
+  - {fileID: 7302197194311820417, guid: 89a1ca1e5872d474b919f0b2f8b6e41b, type: 3}
+  - {fileID: 5150960887711553978, guid: 5e872665b9dd14a2c82179faf74d2017, type: 3}
+  - {fileID: 8070466844278731380, guid: b799409e5aa3b46e5af05efc6ab3a766, type: 3}
+  - {fileID: 6209060069074876579, guid: 3f88bf6b6a6c448ada09ea0502bcbcce, type: 3}
+  - {fileID: 1809904856628806703, guid: 9ff7df773ec9c42c08765a1be0474481, type: 3}
+  coin: {fileID: 2242734490650368068, guid: aa5e7a607daf74b089b6fc5738a05a50, type: 3}
+  instantiateTime: 0.3

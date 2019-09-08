@@ -10,20 +10,21 @@ public class ObstaclesGenerator : MonoBehaviour
 
     public void StartPlaying()
     {
-        InvokeRepeating("InstantiateObs", instantiateTime, 1f);
+        Invoke("InstantiateObs", .8f);
         Invoke("InstantiateCoin", .5f);
     }
 
     void InstantiateObs()
     {
+        float randomTime = Random.Range(1.0f, 1.3f);
         int index = (int) Random.Range(0, 11.5f);
         Instantiate(obstacles[index]);
-        
+        Invoke("InstantiateObs", randomTime);
     }
 
-    void InstantiateCoin()
+    public void InstantiateCoin()
     {
-        float randomTime = Random.Range(1.5f, 2.5f);
+        float randomTime = Random.Range(1.0f, 1.2f);
         Instantiate(coin);
         coin.transform.position = new Vector3(Random.Range(-0.8f, 0.8f), 2.5f, coin.transform.position.z);
         Invoke("InstantiateCoin", randomTime);

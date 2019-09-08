@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
+
     private void OnTriggerEnter(Collider other)
     {
-        Destroy(gameObject);
+        if(other.tag != "Coin")
+        {
+            if(other.tag == "Player") {
+                GameObject.Find("Score Manager").GetComponent<ScoreManager>().AddCoin();
+            }
+            Destroy(gameObject);
+        }
     }
 }
