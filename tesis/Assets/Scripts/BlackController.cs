@@ -4,20 +4,27 @@ using UnityEngine;
 
 public class BlackController : MonoBehaviour
 {
+    public GameEvents gameEvents;
 
-    void TriggerFade()
-	{
-		MenuManager menuManager = GameObject.Find("MenuManager").GetComponent < MenuManager > ();
-		menuManager.StartMenu();
-	}
+    private Animator animator;
+
+    void Start()
+    {
+        animator = gameObject.GetComponent<Animator>();
+    }
+
+    void FadeFinish()
+    {
+        gameEvents.FadeFinish();
+    }
 
     public void FadeOut()
     {
-        gameObject.GetComponent<Animator>().SetTrigger("FadeOut");
+        animator.SetTrigger(GameConstants.ANIMATION_BLACK_FADE_OUT);
     }
 
     public void FadeIn()
     {
-        gameObject.GetComponent<Animator>().SetTrigger("FadeIn");
+        animator.SetTrigger(GameConstants.ANIMATION_BLACK_FADE_IN);
     }
 }

@@ -1,23 +1,8 @@
 ﻿<Properties StartupConfiguration="{59C8D72F-3B81-23D9-CE59-FF2E9F504908}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/BirdAnimatorController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ThornesController.cs">
     <Files>
-      <File FileName="Assets/Scripts/PowerUpController.cs" Line="21" Column="10" />
-      <File FileName="Assets/Scripts/ObstaclesGenerator.cs" Line="42" Column="26" />
-      <File FileName="Assets/Scripts/CoinParentController.cs" Line="9" Column="1" />
-      <File FileName="Assets/Scripts/CoinController.cs" Line="19" Column="1" />
-      <File FileName="Assets/Scripts/ObstacleController.cs" Line="14" Column="1" />
-      <File FileName="Assets/Scripts/MainCharacterController.cs" Line="86" Column="6" />
-      <File FileName="Assets/Scripts/ScrollerController.cs" Line="28" Column="1" />
-      <File FileName="Assets/Scripts/SwipeMove.cs" Line="8" Column="21" />
-      <File FileName="Assets/Scripts/ScoreManager.cs" Line="97" Column="6" />
-      <File FileName="Assets/BirdAnimatorController.cs" Line="36" Column="45" />
-      <File FileName="Assets/Scripts/BlackController.cs" Line="24" Column="1" />
-      <File FileName="Assets/Scripts/CamController.cs" Line="13" Column="1" />
-      <File FileName="Assets/Scripts/FloorController.cs" Line="30" Column="1" />
-      <File FileName="Assets/Scripts/MenuManager.cs" Line="85" Column="1" />
-      <File FileName="Assets/Scripts/SplashController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TitleController.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GarbageCollector.cs" Line="1" Column="1" />
+      <File FileName="Assets/ThornesController.cs" Line="10" Column="10" />
+      <File FileName="Assets/BirdAnimatorController.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,11 +10,18 @@
           <Node name="tesis" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Resources" expanded="True" />
-              <Node name="Scripts" expanded="True">
-                <Node name="ScoreManager.cs" selected="True" />
-              </Node>
+              <Node name="Scripts" expanded="True" />
+              <Node name="ThornesController.cs" selected="True" />
             </Node>
           </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="tesis" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>

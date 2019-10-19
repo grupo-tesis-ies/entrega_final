@@ -5,12 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-	public Animator titleAnimator;
+    public Animator titleAnimator;
     public Animator cameraAnimator;
     public GameObject menuCanvas;
     public GameObject blackImage;
     public MainCharacterController mainCharacter;
     public GameObject pausePanel;
+    public GameEvents gameEvents;
 
     public GameObject configCanvas;
 
@@ -20,20 +21,18 @@ public class MenuManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Game")
         {
-            mainCharacter.gameObject.GetComponent<Animator>().SetTrigger("fly");
-            mainCharacter.StartMovingFloor();
-            Invoke("MoveCharacter", 2.5f);
+            gameEvents.StartStory();
         }
     }
 
     public void StartMenu()
-	{
+    {
         Invoke("SetBlackInactive", 2f);
         if (SceneManager.GetActiveScene().name != "Game")
         {
             titleAnimator.SetTrigger("titleDisplay");
         }
-	}
+    }
 
     void SetBlackInactive()
     {
@@ -45,11 +44,6 @@ public class MenuManager : MonoBehaviour
         menuCanvas.SetActive(false);
         cameraAnimator.SetTrigger("start");
         blackImage.SetActive(true);
-    }
-
-    void MoveCharacter()
-    {
-        mainCharacter.TranslatePigeon();
     }
 
     public void GoBackToMenu()

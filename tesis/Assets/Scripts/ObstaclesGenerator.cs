@@ -19,7 +19,7 @@ public class ObstaclesGenerator : MonoBehaviour
     void InstantiateObs()
     {
         float randomTime = Random.Range(1.0f, 1.3f);
-        int index = (int) Random.Range(0, 11.9f);
+        int index = (int) Random.Range(0, obstacles.Length - 0.1f);
         Instantiate(obstacles[index]);
         Invoke("InstantiateObs", randomTime);
     }

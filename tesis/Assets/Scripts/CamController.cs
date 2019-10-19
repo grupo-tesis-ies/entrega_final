@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CamController : MonoBehaviour
 {
-    void TriggerFly()
+    public GameEvents gameEvents;
+
+    void TriggerZoomOffFinish()
     {
-        MainCharacterController controller = GameObject.Find("MainCharacter").GetComponent<MainCharacterController>();
-        controller.Fly();
+        gameEvents.ZoomOffFinish();
     }
 }

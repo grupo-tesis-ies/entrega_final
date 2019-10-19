@@ -74,13 +74,7 @@ public class MainCharacterController : MonoBehaviour
         }
     }
 
-    public void TranslatePigeon()
-    {
-        isMoving = true;
-        Invoke("SetMoving", 1f);
-    }
-
-    void SetMoving()
+    public void SetMoving(bool isMoving)
     {
         isMoving = false;
     }
