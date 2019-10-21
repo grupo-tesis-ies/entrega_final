@@ -5,7 +5,6 @@ using UnityEngine;
 public class ScrollerController : MonoBehaviour
 {
     private float scrollSpeed;
-    public float tileSizeY;
 
     private Vector3 startPosition;
 
@@ -14,9 +13,9 @@ public class ScrollerController : MonoBehaviour
         startPosition = transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, tileSizeY);
+        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, GameConstants.OBJECTS_OFFSET_TILE_SIZE);
         transform.position = startPosition + Vector3.down * newPosition;
     }
 

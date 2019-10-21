@@ -10,7 +10,8 @@ public class PowerUpController : MonoBehaviour
     {
         if (GameConstants.TAG_PLAYER.Equals(other.tag))
         {
-            other.GetComponent<MainCharacterController>().SetPowerUp(powerUpName);
+            GameObject.Find("Bird").GetComponent<Animator>().SetTrigger(powerUpName);
+           // other.GetComponent<MainCharacterController>().SetPowerUp(powerUpName);
             Destroy(gameObject);
         }
     }

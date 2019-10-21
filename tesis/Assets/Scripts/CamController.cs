@@ -4,10 +4,20 @@ using UnityEngine;
 
 public class CamController : MonoBehaviour
 {
-    public GameEvents gameEvents;
+    private Animator animator;
+
+    void Start()
+    {
+        this.animator = GetComponent<Animator>();    
+    }
 
     void TriggerZoomOffFinish()
     {
-        gameEvents.ZoomOffFinish();
+        GameEvents.instance.ZoomOffFinish();
+    }
+
+    public void TriggerZoomOut()
+    {
+        animator.SetTrigger(GameConstants.ANIMATION_ZOOM_OUT);
     }
 }

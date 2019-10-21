@@ -5,34 +5,39 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-
     public Text scoreText;
     public Text metersText;
-    public float speed;
 
-    private float meterCounter = 0.0f;
-    private bool isCounting = false;
     private int score;
-    private bool isDoubleScore = false;
-    private bool isDoubleMeters = false;
+    private float metersCounter;
+    private bool isCounting;
+    private int coinValue;
+    private int obstacleValue;
+    private float metersValue;
 
-    private void Start()
+    void Start()
     {
+        isCounting = false;
+        metersCounter = 0.0f;
         score = 0;
+        coinValue = 1;
+        metersValue = 1;
+        obstacleValue = 10;
         UpdateScore();
+        UpdateMeters();
     }
 
-    public void AddCoin()
+    void Update()
     {
-        if(isDoubleScore)
+        if (isCounting)
         {
-            score = score +2;
-        } else
-        {
-            score++;
+            metersCounter += Time.deltaTime * metersValue;
+            UpdateMeters();
+            if ((int) metersCounter == 20)
+            {
+                GameEvents.instance.Reached200();
+            }
         }
-
-        UpdateScore();
     }
 
     void UpdateScore()
@@ -40,51 +45,27 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = score.ToString("D4");
     }
 
+    void UpdateMeters()
+    {
+        metersText.text = ((int)metersCounter).ToString("D4") + " m";
+    }
+
     public void StartMetersCounter()
     {
         isCounting = true;
     }
 
-    void Update()
+    public void AddCoin()
     {
-        if(isCounting)
-        {
-            if(isDoubleMeters) {
-                meterCounter += Time.deltaTime * speed * 2;
-            } else
-            {
-                meterCounter += Time.deltaTime * speed;
-            }
-            
-            int seconds = (int) meterCounter;
-            metersText.text = seconds.ToString("D4") + " m";
-        }
-    }
+        score += coinValue;
 
-    public void TurnOnDoubleCoins()
-    {
-        isDoubleScore = true;
-    }
-
-    public void TurnOffDoubleCoins()
-    {
-        isDoubleScore = false;
-    }
-
-    public void TurnOnDoubleMeters()
-    {
-        isDoubleMeters = true;
-    }
-
-    public void TurnOffDoubleMeters()
-    {
-        isDoubleMeters = false;
+        UpdateScore();
     }
 
     public void Hit()
     {
-        score = score - 15;
-        if(score < 0)
+        score -= obstacleValue;
+        if (score < 0)
         {
             score = 0;
         }
@@ -94,5 +75,20 @@ public class ScoreManager : MonoBehaviour
     public bool HasCoins()
     {
         return score > 0;
+    }
+
+    public void SetCoinValue(int coinValue)
+    {
+        this.coinValue = coinValue;
+    }
+
+    public void SetObstacleValue(int obstacleValue)
+    {
+        this.obstacleValue = obstacleValue;
+    }
+
+    public void SetMetersValue(int metersValue)
+    {
+        this.metersValue = metersValue;
     }
 }

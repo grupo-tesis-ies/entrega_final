@@ -345,7 +345,7 @@ ModelImporter:
       curves: []
       events:
       - time: 1
-        functionName: MoveFloor
+        functionName: StartsFlying
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 9885e3aa215b641c1bcab0ee0c30875c,
           type: 3}

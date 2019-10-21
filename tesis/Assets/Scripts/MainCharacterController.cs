@@ -5,119 +5,119 @@ using UnityEngine.SceneManagement;
 
 public class MainCharacterController : MonoBehaviour
 {
-    private bool isMoving = false;
-    public float movingSpeed = 2f;
-    public BlackController blackController;
-    private float backgroundSpeed;
-    private bool isShieldUp = false;
+    public AudioClip flySoundA;
+    public AudioClip flySoundB;
+    private bool isMoving;
+    public float force;
 
-    public void Fly()
+    private Animator animator;
+    private bool isIgnoringCollisions;
+    private bool isImpulseUp;
+    private bool isPlaying;
+
+    void Start()
     {
-        GetComponent<Animator>().SetTrigger("fly");
+        this.animator = GetComponent<Animator>();
+        this.isMoving = false;
     }
 
-    public void MoveFloor()
+    void FixedUpdate()
     {
-        if(SceneManager.GetActiveScene().name != "Game")
+        if (isMoving)
         {
-            Invoke("StartGame", 1.8f);
-            isMoving = true;
-        } else
-        {
-            GameObject.Find("Obstacles Generator").GetComponent<ObstaclesGenerator>().StartPlaying();
-            GetComponent<SwipeMove>().enabled = true;
-            GameObject.Find("Score Manager").GetComponent<ScoreManager>().StartMetersCounter();
+            transform.Translate(Vector3.up * Time.deltaTime * GameConstants.BIRD_FLIGHT_SPEED);
         }
     }
 
-    private void FixedUpdate()
+    public void Launch()
     {
-        if(isMoving)
-        {
-            transform.Translate(Vector3.up * Time.deltaTime * movingSpeed);
-        }
+        animator.SetTrigger(GameConstants.ANIMATION_LAUNCH);
     }
 
-    public void StartMovingFloor()
+    public void StartsFlying()
     {
-        backgroundSpeed = 0.7f;
-        GameObject.Find("Background").GetComponent<ScrollerController>().SetSpeed(Mathf.Lerp(0, backgroundSpeed, 0.5f));
-        GameObject.Find("Background Offset").GetComponent<ScrollerController>().SetSpeed(Mathf.Lerp(0, backgroundSpeed, 0.5f));
-    }
-
-    void MoveCamera()
-    {
-        GetComponent<SwipeMove>().enabled = true;
-    }
-
-    void StartGame()
-    {
-        blackController.FadeIn();
-        Invoke("ChangeLevel", 1.5f);
-    }
-
-    void ChangeLevel()
-    {
-        SceneManager.LoadScene("Game");
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Obstacle" && !isShieldUp)
-        {
-            GetComponent<Animator>().SetTrigger("hit");
-            if (GameObject.Find("Score Manager").GetComponent<ScoreManager>().HasCoins())
-            {
-                GameObject.Find("Bird Particles").GetComponent<ParticleSystem>().Play();
-            }
-            GameObject.Find("Score Manager").GetComponent<ScoreManager>().Hit();
-        }
+        GameEvents.instance.StartsFlying();
+        InvokeRepeating("FlySound", 0.5f, 0.9f);
+        isPlaying = true;
     }
 
     public void SetMoving(bool isMoving)
     {
-        isMoving = false;
+        this.isMoving = isMoving;
     }
 
-    public void SetPowerUp(string powerUp)
+    public void SetSwipe(bool swipeActive)
     {
-        GameObject.Find("Bird").GetComponent<Animator>().SetTrigger(powerUp);
-        if(powerUp == "shieldUp")
-        {
-            isShieldUp = true;
-        }
-        if (powerUp == "impulseUp")
-        {
-            GameObject.Find("Score Manager").GetComponent<ScoreManager>().TurnOnDoubleMeters();
-            SetBackgroundSpeed(1.4f);
-        }
-        if (powerUp == "x2Up")
-        {
-            GameObject.Find("Score Manager").GetComponent<ScoreManager>().TurnOnDoubleCoins();
-        }
+        GetComponent<SwipeMove>().enabled = swipeActive;
     }
 
-    public void SetPowerUpOff(string powerUp)
+    private void OnTriggerEnter(Collider other)
     {
-        if (powerUp == "shield")
+        if(!isPlaying)
         {
-            isShieldUp = false;
+            return;
         }
-        if (powerUp == "impulse")
+
+        if(GameConstants.TAG_OBSTACLE.Equals(other.tag) && !isIgnoringCollisions)
         {
-            GameObject.Find("Score Manager").GetComponent<ScoreManager>().TurnOffDoubleMeters();
-            SetBackgroundSpeed(0.7f);
-        }
-        if (powerUp == "x2")
-        {
-            GameObject.Find("Score Manager").GetComponent<ScoreManager>().TurnOffDoubleCoins();
+            if(isImpulseUp)
+            {
+                other.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+                other.gameObject.GetComponent<Rigidbody>().AddForceAtPosition(Vector3.up * force, transform.position, ForceMode.Impulse);
+                return;
+            }
+            StartCoroutine(AfterHit());
+            GameEvents.instance.GotHit();
+            animator.SetTrigger(GameConstants.ANIMATION_HIT);
         }
     }
 
-    public void SetBackgroundSpeed(float speed)
+    public void SetImpulseOn()
     {
-        GameObject.Find("Background").GetComponent<ScrollerController>().SetSpeed(Mathf.Lerp(backgroundSpeed, speed, 0.5f));
-        GameObject.Find("Background Offset").GetComponent<ScrollerController>().SetSpeed(Mathf.Lerp(backgroundSpeed, speed, 0.5f));
-        backgroundSpeed = speed;
+        animator.speed = 2;
+        isImpulseUp = true;
+    }
+
+    public void SetImpulseOff()
+	{
+		animator.speed = 1;
+        isImpulseUp = false;
+    }
+
+    public void SetShieldOn()
+    {
+        isIgnoringCollisions = true;
+    }
+
+	public void SetShieldOff()
+	{
+        isIgnoringCollisions = false;
+	}
+
+    public void SetX2Off()
+	{
+
+	}
+
+    IEnumerator AfterHit()
+    {
+        isIgnoringCollisions = true;
+        yield return new WaitForSeconds(0.5f);
+        isIgnoringCollisions = false;
+    }
+
+    void FlySound()
+    {
+        if(!isPlaying)
+        {
+            return;
+        }
+
+        SoundManager.instance.RandomizeSfx(flySoundA, flySoundB);
+    }
+
+    public void SetPlaying(bool isPlaying)
+    {
+        this.isPlaying = isPlaying;
     }
 }

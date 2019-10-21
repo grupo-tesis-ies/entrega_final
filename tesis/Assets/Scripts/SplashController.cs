@@ -7,6 +7,6 @@ public class SplashController : MonoBehaviour
 {
     public void StartMenu()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene(GameConstants.SCENE_MENU);
     }
 }

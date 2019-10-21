@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class BlackController : MonoBehaviour
 {
-    public GameEvents gameEvents;
-
     private Animator animator;
 
     void Start()
     {
-        animator = gameObject.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
+        FadeOut();
     }
 
     void FadeFinish()
     {
-        gameEvents.FadeFinish();
+        GameEvents.instance.FadeFinish();
     }
 
     public void FadeOut()

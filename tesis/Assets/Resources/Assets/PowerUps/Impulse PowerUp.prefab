@@ -142,7 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24f97df9ea9de4bd68c571e16f8084c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animation: impulseUp
+  powerUpName: impulseUp
 --- !u!114 &8757200647959426279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,4 +155,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b71edf144d7ad40c6a966209aa472329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleSpeed: 2

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1633546187260724681}
   - component: {fileID: 6216666848701640316}
   - component: {fileID: 1051400943910564116}
-  - component: {fileID: 1051400943910564118}
   - component: {fileID: 1051400943910564119}
   - component: {fileID: -6502990863509056742}
   m_Layer: 0
@@ -114,19 +113,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9999998, y: 2, z: 0.2900108}
   m_Center: {x: 0.0026226938, y: -0.02263382, z: -0.000000067055225}
---- !u!114 &1051400943910564118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051400943910564117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71edf144d7ad40c6a966209aa472329, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacleSpeed: 2
 --- !u!114 &1051400943910564119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,8 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a97c29d56b3f4e91967a0c78e073656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 5211721414978337694, guid: 4d53fe56188b14d708ccb071e8762ba8,
-    type: 3}
+  gameEvents: {fileID: 0}
 --- !u!54 &-6502990863509056742
 Rigidbody:
   m_ObjectHideFlags: 0

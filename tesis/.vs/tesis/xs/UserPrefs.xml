@@ -1,34 +1,35 @@
 ﻿<Properties StartupConfiguration="{59C8D72F-3B81-23D9-CE59-FF2E9F504908}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/ThornesController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameEvents.cs">
     <Files>
-      <File FileName="Assets/ThornesController.cs" Line="10" Column="10" />
-      <File FileName="Assets/BirdAnimatorController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SoundManager.cs" Line="27" Column="6" />
+      <File FileName="Assets/Scripts/GameEvents.cs" Line="237" Column="1" />
+      <File FileName="Assets/Scripts/MainCharacterController.cs" Line="115" Column="1" />
+      <File FileName="Assets/Scripts/ScoreManager.cs" Line="38" Column="43" />
+      <File FileName="Assets/Scripts/TitleWords.cs" />
+      <File FileName="Assets/Scripts/BlackController.cs" Line="17" Column="34" />
+      <File FileName="Assets/Scripts/BirdAnimatorController.cs" Line="22" Column="28" />
+      <File FileName="Assets/Scripts/CamController.cs" Line="16" Column="28" />
+      <File FileName="Assets/Scripts/CoinController.cs" Line="11" Column="9" />
+      <File FileName="Assets/Scripts/MenuManager.cs" Line="18" Column="2" />
+      <File FileName="Assets/Scripts/TitleBoard.cs" Line="24" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="tesis" expanded="True">
             <Node name="Assets" expanded="True">
-              <Node name="Resources" expanded="True" />
-              <Node name="Scripts" expanded="True" />
-              <Node name="ThornesController.cs" selected="True" />
+              <Node name="Scripts" expanded="True">
+                <Node name="GameEvents.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
-        </State>
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State />
-      </Pad>
-      <Pad Id="MonoDevelop.UnitTesting.TestPad">
-        <State name="__root__">
-          <Node name="tesis" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="67ee5590-3bc7-48da-9640-8563c71ee943" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="5a270182-6fba-42aa-ab68-968c3816b84d" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

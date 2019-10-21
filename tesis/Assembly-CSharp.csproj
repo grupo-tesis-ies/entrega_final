@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BirdAnimatorController.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Achievement.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\CommonStatusCodes.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\CommonTypes.cs" />
@@ -125,8 +124,7 @@
     <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\TokenClient.cs" />
     <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
-    <Compile Include="Assets\GPGSIds.cs" />
-    <Compile Include="Assets\MainMenuEvents.cs" />
+    <Compile Include="Assets\Scripts\BirdAnimatorController.cs" />
     <Compile Include="Assets\Scripts\BlackController.cs" />
     <Compile Include="Assets\Scripts\CamController.cs" />
     <Compile Include="Assets\Scripts\CoinController.cs" />
@@ -135,17 +133,21 @@
     <Compile Include="Assets\Scripts\GameEvents.cs" />
     <Compile Include="Assets\Scripts\GameParameters.cs" />
     <Compile Include="Assets\Scripts\GarbageCollector.cs" />
+    <Compile Include="Assets\Scripts\GPGSIds.cs" />
     <Compile Include="Assets\Scripts\MainCharacterController.cs" />
+    <Compile Include="Assets\Scripts\MainMenuEvents.cs" />
     <Compile Include="Assets\Scripts\MenuManager.cs" />
     <Compile Include="Assets\Scripts\MoveDown.cs" />
-    <Compile Include="Assets\Scripts\ObstaclesGenerator.cs" />
+    <Compile Include="Assets\Scripts\ObjectsFactory.cs" />
     <Compile Include="Assets\Scripts\PowerUpController.cs" />
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\ScrollerController.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\SplashController.cs" />
     <Compile Include="Assets\Scripts\SwipeMove.cs" />
-    <Compile Include="Assets\Scripts\TitleController.cs" />
-    <Compile Include="Assets\ThornesController.cs" />
+    <Compile Include="Assets\Scripts\ThornesController.cs" />
+    <Compile Include="Assets\Scripts\TitleBoard.cs" />
+    <Compile Include="Assets\Scripts\TitleWords.cs" />
     <None Include="Assets\GooglePlayGames\Plugins\Android\GooglePlayGamesManifest.plugin\AndroidManifest.xml" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>/Users/espinaco/Documents/tesis/entrega_final/tesis/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

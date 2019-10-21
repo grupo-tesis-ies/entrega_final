@@ -7,11 +7,7 @@ public class BirdAnimatorController : StateMachineBehaviour
     // OnStateEnter is called before OnStateEnter is called on any state inside this state machine
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (stateInfo.IsTag("impulse"))
-        {
-            GameObject.Find("MainCharacter").GetComponent<Animator>().speed = 2f;
-            GameObject.Find("MainCharacter").GetComponent<MainCharacterController>().SetPowerUp("impulse");
-        }
+        GameEvents.instance.BirdEntersState(stateInfo);
     }
 
     // OnStateUpdate is called before OnStateUpdate is called on any state inside this state machine
@@ -23,19 +19,7 @@ public class BirdAnimatorController : StateMachineBehaviour
     // OnStateExit is called before OnStateExit is called on any state inside this state machine
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if(stateInfo.IsTag("shield"))
-        {
-            GameObject.Find("MainCharacter").GetComponent<MainCharacterController>().SetPowerUpOff("shield");
-        }
-        if (stateInfo.IsTag("x2"))
-        {
-            GameObject.Find("MainCharacter").GetComponent<MainCharacterController>().SetPowerUpOff("x2");
-        }
-        if (stateInfo.IsTag("impulse"))
-        {
-            GameObject.Find("MainCharacter").GetComponent<Animator>().speed = 1f;
-            GameObject.Find("MainCharacter").GetComponent<MainCharacterController>().SetPowerUpOff("impulse");
-        }
+        GameEvents.instance.BirdExitsState(stateInfo);
     }
 
     // OnStateMove is called before OnStateMove is called on any state inside this state machine

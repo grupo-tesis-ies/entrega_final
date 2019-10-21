@@ -5,8 +5,9 @@ using UnityEngine;
 public class GameParameters : MonoBehaviour
 {
     // Player Settings
+    public float birdVerticalSpeed;
     public float birdSlideSpeed;
-    private const float BIRD_FLIGHT_SPEED = 2f;
+    
 
     // On Game Settings
     public float backgroundSpeed;
@@ -17,7 +18,10 @@ public class GameParameters : MonoBehaviour
     public float powerUpCoinsTime;
     public float powerUpImpulseMultiplier;
 
-
+    // Score
+    public float scoreMetersValue;
+    public int scoreCoinsValue;
+    public int scoreObstacleValue;
 
     // Start is called before the first frame update
     void Start()

@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObstacleController : MonoBehaviour
+public class MoveDown : MonoBehaviour
 {
-    public float obstacleSpeed;
+    private float speed;
 
     void Update()
     {
-        transform.Translate(Vector3.down * Time.deltaTime * obstacleSpeed);
+        transform.Translate(Vector3.down * Time.deltaTime * speed);
+    }
+
+    public void SetMovingSpeed(float speed)
+    {
+        this.speed = speed;
     }
 }
