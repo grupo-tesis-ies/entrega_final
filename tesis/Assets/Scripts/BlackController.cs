@@ -1,29 +1,38 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlackController : MonoBehaviour
-{
+public class BlackController : MonoBehaviour {
+
+    public static BlackController instance = null;
     private Animator animator;
 
-    void Start()
-    {
-        animator = GetComponent<Animator>();
-        FadeOut();
+    void Awake () {
+        if (instance == null) {
+            instance = this;
+        } else if (instance != this) {
+            Destroy (gameObject);
+        }
+        DontDestroyOnLoad (gameObject);
     }
 
-    void FadeFinish()
-    {
-        GameEvents.instance.FadeFinish();
+    void Start () {
+        FadeOut ();
     }
 
-    public void FadeOut()
-    {
-        animator.SetTrigger(GameConstants.ANIMATION_BLACK_FADE_OUT);
+    void FadeFinish () {
+        GameEvents.instance.FadeFinish ();
     }
 
-    public void FadeIn()
-    {
-        animator.SetTrigger(GameConstants.ANIMATION_BLACK_FADE_IN);
+    public void FadeOut () {
+        instance.GetComponent<Animator>().SetTrigger (GameConstants.ANIMATION_BLACK_FADE_OUT);
+    }
+
+    public void FadeIn () {
+        instance.GetComponent<Animator>().SetTrigger (GameConstants.ANIMATION_BLACK_FADE_IN);
+    }
+
+    void OnLevelWasLoaded (int level) {
+        FadeOut ();
     }
 }

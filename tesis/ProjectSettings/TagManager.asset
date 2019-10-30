@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - Coin
+  - Cam_tmp
   layers:
   - Default
   - TransparentFX

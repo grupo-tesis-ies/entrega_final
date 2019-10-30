@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreManager : MonoBehaviour
-{
+public class ScoreManager : MonoBehaviour {
+
+    public static ScoreManager instance = null;
     public Text scoreText;
     public Text metersText;
 
@@ -15,80 +16,77 @@ public class ScoreManager : MonoBehaviour
     private int obstacleValue;
     private float metersValue;
 
-    void Start()
-    {
+    private bool isPlaying;
+
+    void Awake () {
+        if (instance == null) {
+            instance = this;
+        } else if (instance != this) {
+            Destroy (gameObject);
+        }
+    }
+    void Start () {
         isCounting = false;
         metersCounter = 0.0f;
         score = 0;
         coinValue = 1;
         metersValue = 1;
         obstacleValue = 10;
-        UpdateScore();
-        UpdateMeters();
+        UpdateScore ();
+        UpdateMeters ();
+        isPlaying = true;
     }
 
-    void Update()
-    {
-        if (isCounting)
-        {
+    void Update () {
+        if (isCounting) {
             metersCounter += Time.deltaTime * metersValue;
-            UpdateMeters();
-            if ((int) metersCounter == 20)
-            {
-                GameEvents.instance.Reached200();
+            UpdateMeters ();
+            if ((int) metersCounter == 30 && isPlaying) {
+                GameEvents.instance.Reached200 ();
+                isPlaying = false;
             }
         }
     }
 
-    void UpdateScore()
-    {
-        scoreText.text = score.ToString("D4");
+    void UpdateScore () {
+        scoreText.text = score.ToString ("D4");
     }
 
-    void UpdateMeters()
-    {
-        metersText.text = ((int)metersCounter).ToString("D4") + " m";
+    void UpdateMeters () {
+        metersText.text = ((int) metersCounter).ToString ("D4") + " m";
     }
 
-    public void StartMetersCounter()
-    {
+    public void StartMetersCounter () {
         isCounting = true;
     }
 
-    public void AddCoin()
-    {
+    public void AddCoin () {
         score += coinValue;
 
-        UpdateScore();
+        UpdateScore ();
     }
 
-    public void Hit()
-    {
+    public void Hit () {
         score -= obstacleValue;
-        if (score < 0)
-        {
+        if (score < 0) {
             score = 0;
         }
-        UpdateScore();
+        UpdateScore ();
     }
 
-    public bool HasCoins()
-    {
+    public bool HasCoins () {
         return score > 0;
     }
 
-    public void SetCoinValue(int coinValue)
-    {
+    public void SetCoinValue (int coinValue) {
         this.coinValue = coinValue;
     }
 
-    public void SetObstacleValue(int obstacleValue)
-    {
+    public void SetObstacleValue (int obstacleValue) {
         this.obstacleValue = obstacleValue;
     }
 
-    public void SetMetersValue(int metersValue)
-    {
+    public void SetMetersValue (int metersValue) {
         this.metersValue = metersValue;
     }
 }

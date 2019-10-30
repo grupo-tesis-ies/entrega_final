@@ -1,23 +1,24 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleBoard : MonoBehaviour
-{
-    private Animator animator;
+public class TitleBoard : MonoBehaviour {
 
-    void Start()
-    {
-        this.animator = GetComponent<Animator>();    
+    public static TitleBoard instance = null;
+
+    void Awake () {
+        if (instance == null) {
+            instance = this;
+        } else if (instance != this) {
+            Destroy (gameObject);
+        }
     }
 
-    public void TriggerTitleBoard()
-    {
-        animator.SetTrigger(GameConstants.ANIMATION_TITLE_BOARD_DISPLAY);
+    public void TriggerTitleBoard () {
+        instance.GetComponent<Animator>().SetTrigger (GameConstants.ANIMATION_TITLE_BOARD_DISPLAY);
     }
 
-    public void TriggerWords()
-    {
-        GameEvents.instance.TriggerTitleWords();
+    public void TriggerWords () {
+        GameEvents.instance.TriggerTitleWords ();
     }
 }

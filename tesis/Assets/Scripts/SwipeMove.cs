@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,48 +10,44 @@ public class SwipeMove : MonoBehaviour {
     private float maxSpeed;
     private bool isInverted;
 
-    void Start()
-    {
+    private float minSpeed;
+
+    private float maxTopSpeed;
+
+    void Start () {
         mid = Screen.width / 2;
         size = Camera.main.orthographicSize / 2 - 0.1f;
         maxSpeed = speed;
+        minSpeed = maxSpeed / 4;
         isInverted = false;
+        maxTopSpeed = maxSpeed;
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButton(0))
-        {
+    void Update () {
+        if (Input.GetMouseButton (0)) {
             //transform.position.x = Input.mousePosition.x;
             Camera cam = Camera.main;
             //Input.GetTouch(0)
             //transform.position = new Vector3(, transform.position.y, transform.position.z);
             bool isLeft = Input.mousePosition.x < mid;
-            if(isInverted)
-            {
-                if(isLeft)
-                {
+            if (isInverted) {
+                if (isLeft) {
                     transform.position += Vector3.right * Time.deltaTime * speed;
-                } else
-                {
+                } else {
                     transform.position += Vector3.left * Time.deltaTime * speed;
                 }
-                transform.position = new Vector3(Mathf.Clamp(transform.position.x, -0.8f, 0.8f), transform.position.y, transform.position.z);
-            } else
-            {
-                float difference = transform.position.x - cam.ScreenToWorldPoint(Input.mousePosition).x;
+                transform.position = new Vector3 (Mathf.Clamp (transform.position.x, -0.8f, 0.8f), transform.position.y, transform.position.z);
+            } else {
+                float difference = transform.position.x - cam.ScreenToWorldPoint (Input.mousePosition).x;
                 Vector3 direction = difference > 0f ? Vector3.left : Vector3.right;
 
-                if (Mathf.Abs(difference) > 0.2f)
-                {
+                if (Mathf.Abs (difference) > 0.2f) {
                     speed += 1f;
-                    speed = Mathf.Clamp(speed, maxSpeed / 4, maxSpeed);
-                    transform.position = Vector3.Lerp(transform.position, new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, transform.position.y, transform.position.z), Time.deltaTime * speed);
-                }
-                else if (Mathf.Abs(difference) > 0.1f)
-                {
+                    speed = Mathf.Clamp (speed, maxSpeed / 4, maxSpeed);
+                    transform.position = Vector3.Lerp (transform.position, new Vector3 (cam.ScreenToWorldPoint (Input.mousePosition).x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                } else if (Mathf.Abs (difference) > 0.1f) {
                     speed = maxSpeed / 4;
-                    transform.position = Vector3.Lerp(transform.position, new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, transform.position.y, transform.position.z), Time.deltaTime * speed);
+                    transform.position = Vector3.Lerp (transform.position, new Vector3 (cam.ScreenToWorldPoint (Input.mousePosition).x, transform.position.y, transform.position.z), Time.deltaTime * speed);
                 }
             }
 
@@ -111,29 +107,25 @@ public class SwipeMove : MonoBehaviour {
         }
     }
 
-    public void SlowDown()
-    {
-        maxSpeed = maxSpeed / 4;
-        StartCoroutine(ReturnSpeed());
+    public void SlowDown () {
+        maxSpeed = minSpeed;
+        StartCoroutine (ReturnSpeed ());
 
     }
 
-    IEnumerator ReturnSpeed()
-    {
-        yield return new WaitForSeconds(5);
-        maxSpeed = maxSpeed * 4;
+    IEnumerator ReturnSpeed () {
+        yield return new WaitForSeconds (5);
+        maxSpeed = maxTopSpeed;
     }
 
-    public void Invert()
-    {
+    public void Invert () {
         isInverted = true;
-        StartCoroutine(InvertOff());
+        StartCoroutine (InvertOff ());
 
     }
 
-    IEnumerator InvertOff()
-    {
-        yield return new WaitForSeconds(5);
+    IEnumerator InvertOff () {
+        yield return new WaitForSeconds (5);
         isInverted = false;
     }
 }

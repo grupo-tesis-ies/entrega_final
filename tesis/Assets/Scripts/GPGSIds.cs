@@ -21,11 +21,8 @@
 /// Resources.
 ///
 
-
-public static class GPGSIds
-{
-        public const string leaderboard_duracin_en_modo_endless = "CgkIxfr5ztAYEAIQAA"; // <GPGSID>
-        public const string achievement_test = "CgkIxfr5ztAYEAIQAQ"; // <GPGSID>
+public static class GPGSIds {
+    public const string leaderboard_duracin_en_modo_endless = "CgkIxfr5ztAYEAIQAA"; // <GPGSID>
+    public const string achievement_test = "CgkIxfr5ztAYEAIQAQ"; // <GPGSID>
 
 }
-

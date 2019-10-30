@@ -1,23 +1,32 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CamController : MonoBehaviour
-{
-    private Animator animator;
+public class CamController : MonoBehaviour {
 
-    void Start()
-    {
-        this.animator = GetComponent<Animator>();    
+    public static CamController instance = null;
+
+    void Awake () {
+        if (instance == null) {
+            instance = this;
+        } else if (instance != this) {
+            Destroy (gameObject);
+        }
     }
 
-    void TriggerZoomOffFinish()
-    {
-        GameEvents.instance.ZoomOffFinish();
+    void TriggerZoomOffFinish () {
+        GameEvents.instance.ZoomOffFinish ();
     }
 
-    public void TriggerZoomOut()
-    {
-        animator.SetTrigger(GameConstants.ANIMATION_ZOOM_OUT);
+    public void TriggerSignIn () {
+        instance.GetComponent<Animator> ().SetTrigger (GameConstants.ANIMATION_SIGN_IN);
+    }
+
+    public void TriggerSignOut () {
+        instance.GetComponent<Animator> ().SetTrigger (GameConstants.ANIMATION_SIGN_OUT);
+    }
+
+    public void TriggerZoomOut () {
+        instance.GetComponent<Animator> ().SetTrigger (GameConstants.ANIMATION_ZOOM_OUT);
     }
 }

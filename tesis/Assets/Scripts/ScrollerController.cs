@@ -1,26 +1,30 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScrollerController : MonoBehaviour
-{
+public class ScrollerController : MonoBehaviour {
+
+    public static ScrollerController instance = null;
+
     private float scrollSpeed;
 
     private Vector3 startPosition;
 
-    void Start()
-    {
-        startPosition = transform.position;
+    void Awake () {
+        if (instance == null) {
+            instance = this;
+        } else if (instance != this) {
+            Destroy (gameObject);
+        }
+        instance.startPosition = transform.position;
     }
 
-    void FixedUpdate()
-    {
-        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, GameConstants.OBJECTS_OFFSET_TILE_SIZE);
-        transform.position = startPosition + Vector3.down * newPosition;
+    void FixedUpdate () {
+        float newPosition = Mathf.Repeat (Time.time * instance.scrollSpeed, GameConstants.OBJECTS_OFFSET_TILE_SIZE);
+        instance.transform.position = instance.startPosition + Vector3.down * newPosition;
     }
 
-    public void SetSpeed(float speed)
-    {
-        this.scrollSpeed = speed;
+    public void SetSpeed (float speed) {
+        instance.scrollSpeed = speed;
     }
 }
