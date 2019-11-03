@@ -93,7 +93,10 @@ public class MainMenuManager : MonoBehaviour {
 
     public void StartEasyMode () {
         GameEvents.instance.StartGame (false, true);
+        menuCanvas.SetActive (false);
         difficultyCanvas.SetActive (false);
+        modeCanvas.SetActive (false);
+        titleParent.SetActive (false);
     }
 
     public void StartMediumMode () {

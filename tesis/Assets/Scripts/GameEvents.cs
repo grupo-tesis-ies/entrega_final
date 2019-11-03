@@ -49,15 +49,7 @@ public class GameEvents : MonoBehaviour {
             OnMenuSounds.instance.PlayBoard ();
             BlackController.instance.gameObject.SetActive (false);
 
-            bool hasFinishedHistory = false;
-            PlayGamesPlatform.Instance.LoadAchievements (achievements => {
-                foreach (IAchievement achievement in achievements) {
-                    if (achievement.completed) {
-                        hasFinishedHistory = true;
-                    }
-                }
-            });
-            MainMenuManager.instance.SetHistoryModeFinished (hasFinishedHistory);
+            MainMenuManager.instance.SetHistoryModeFinished (PlayerPrefs.GetInt("storyMode") == 1);
         } else if (GameConstants.SCENE_GAME.Equals (activeScene)) {
             inGame = true;
             MoveFloorFrom (BACKGROUND_IDLE_SPEED, backgroundSpeed);
@@ -238,6 +230,8 @@ public class GameEvents : MonoBehaviour {
                         Debug.Log ("Coins Increment: " + success);
                     });
             }
+            PlayerPrefs.SetInt("storyMode", 1);
+            PlayerPrefs.Save();
 
             BlackController.instance.gameObject.SetActive (true);
             BlackController.instance.FadeIn ();
