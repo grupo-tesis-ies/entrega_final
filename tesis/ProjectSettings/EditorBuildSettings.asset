@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/HistoryMode.unity
     guid: 7285b3616327d4b388fc73f9b1c28c74
+  - enabled: 1
+    path: Assets/Scenes/TimeTrack.unity
+    guid: 31e54ff7194ce4a228f0c047e25da49b
   m_configObjects: {}

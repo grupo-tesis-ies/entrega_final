@@ -27,8 +27,9 @@ public class GameConstants : MonoBehaviour {
 
     //Scenes
     public const string SCENE_MENU = "Menu";
-    public const string SCENE_GAME = "Game";
+    public const string SCENE_GAME = "HistoryMode";
     public const string SCENE_SPLASH = "Splash";
+    public const string SCENE_TIME_TRACK = "TimeTrack";
 
     public const float BIRD_FLIGHT_SPEED = 2f;
 }

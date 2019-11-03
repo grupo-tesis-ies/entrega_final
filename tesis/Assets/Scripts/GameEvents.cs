@@ -4,6 +4,7 @@ using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 
 public class GameEvents : MonoBehaviour {
     public static GameEvents instance = null;
@@ -21,10 +22,13 @@ public class GameEvents : MonoBehaviour {
     private const float INVOKE_TIME_INSTANTIATE_OBS = 0.8f;
     private const float INVOKE_TIME_INSTANTIATE_COIN = 0.5f;
     private const float INVOKE_TIME_INSTANTIATE_POWER_UPS = 5f;
+    private const float INVOKE_TIME_INSTANTIATE_CHRONO = 8f;
 
     private bool inGame;
 
     private bool isStoryMode = true;
+
+    private bool isEasyMode = true;
 
     void Awake () {
         if (instance == null) {
@@ -41,10 +45,25 @@ public class GameEvents : MonoBehaviour {
             Invoke ("FadeIn", 1f);
             Invoke ("GoToMenu", 3f);
         } else if (GameConstants.SCENE_MENU.Equals (activeScene)) {
-            OnMenuSounds.instance.PlayBoard ();
             TitleBoard.instance.TriggerTitleBoard ();
+            OnMenuSounds.instance.PlayBoard ();
             BlackController.instance.gameObject.SetActive (false);
+
+            bool hasFinishedHistory = false;
+            PlayGamesPlatform.Instance.LoadAchievements (achievements => {
+                foreach (IAchievement achievement in achievements) {
+                    if (achievement.completed) {
+                        hasFinishedHistory = true;
+                    }
+                }
+            });
+            MainMenuManager.instance.SetHistoryModeFinished (hasFinishedHistory);
         } else if (GameConstants.SCENE_GAME.Equals (activeScene)) {
+            inGame = true;
+            MoveFloorFrom (BACKGROUND_IDLE_SPEED, backgroundSpeed);
+            MainCharacterController.instance.Launch ();
+            BlackController.instance.gameObject.SetActive (false);
+        } else if (GameConstants.SCENE_TIME_TRACK.Equals (activeScene)) {
             inGame = true;
             MoveFloorFrom (BACKGROUND_IDLE_SPEED, backgroundSpeed);
             MainCharacterController.instance.Launch ();
@@ -52,7 +71,9 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
-    public void StartGame () {
+    public void StartGame (bool isStoryMode, bool isEasyMode) {
+        instance.isStoryMode = isStoryMode;
+        instance.isEasyMode = isEasyMode;
         if (isStoryMode) {
             CamController.instance.TriggerSignIn ();
             Invoke ("DisplayInstructions", 3f);
@@ -76,8 +97,12 @@ public class GameEvents : MonoBehaviour {
         string activeScene = SceneManager.GetActiveScene ().name;
         if (GameConstants.SCENE_MENU.Equals (activeScene)) {
             Invoke ("FadeIn", INVOKE_TIME_FADE_IN);
-            Invoke ("LoadGameScene", INVOKE_TIME_LOAD_GAME_SCENE);
-        } else if (GameConstants.SCENE_GAME.Equals (activeScene)) {
+            if (isStoryMode) {
+                Invoke ("LoadGameScene", INVOKE_TIME_LOAD_GAME_SCENE);
+            } else if (isEasyMode) {
+                Invoke ("LoadEasyModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
+            }
+        } else if (GameConstants.SCENE_GAME.Equals (activeScene) || GameConstants.SCENE_TIME_TRACK.Equals (activeScene)) {
             StartCoroutine (StopCharacter (STOP_CHARACTER_TIME));
         }
     }
@@ -90,6 +115,10 @@ public class GameEvents : MonoBehaviour {
         SceneManager.LoadScene (GameConstants.SCENE_GAME);
     }
 
+    void LoadEasyModeScene () {
+        SceneManager.LoadScene (GameConstants.SCENE_TIME_TRACK);
+    }
+
     public void TriggerTitleWords () {
         TitleWords.instance.TriggerWords ();
     }
@@ -98,10 +127,16 @@ public class GameEvents : MonoBehaviour {
         yield return new WaitForSeconds (seconds);
         MainCharacterController.instance.SetMoving (false);
         MainCharacterController.instance.SetSwipe (true);
-        ScoreManager.instance.StartMetersCounter ();
+
         Invoke ("InstantiateObs", INVOKE_TIME_INSTANTIATE_OBS);
-        Invoke ("InstantiateCoin", INVOKE_TIME_INSTANTIATE_COIN);
         Invoke ("InstantiatePowerUps", INVOKE_TIME_INSTANTIATE_POWER_UPS);
+        if (GameConstants.SCENE_TIME_TRACK.Equals (SceneManager.GetActiveScene ().name)) {
+            TimeTrackManager.instance.StartMetersCounter ();
+            Invoke ("InstantiateChrono", INVOKE_TIME_INSTANTIATE_CHRONO);
+        } else {
+            Invoke ("InstantiateCoin", INVOKE_TIME_INSTANTIATE_COIN);
+            ScoreManager.instance.StartMetersCounter ();
+        }
     }
 
     void InstantiateObs () {
@@ -114,6 +149,10 @@ public class GameEvents : MonoBehaviour {
 
     void InstantiatePowerUps () {
         ObjectsFactory.instance.InstantiatePowerUps ();
+    }
+
+    void InstantiateChrono () {
+        ObjectsFactory.instance.InstantiateChrono ();
     }
 
     void MoveFloorFrom (float previousSpeed, float newSpeed) {
@@ -133,10 +172,15 @@ public class GameEvents : MonoBehaviour {
             ScoreManager.instance.SetCoinValue (1);
         } else if (stateInfo.IsTag ("impulse")) {
             MainCharacterController.instance.SetImpulseOff ();
-            ScoreManager.instance.SetMetersValue (1);
+            if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
+                ScoreManager.instance.SetMetersValue (1);
+            } else {
+                TimeTrackManager.instance.SetMetersValue (1);
+            }
             MoveFloorFrom (backgroundSpeed * 3, backgroundSpeed);
             ObjectsFactory.instance.SetSpeed (2f);
         }
+        PowerUpParticles.instance.DisableEmission ();
     }
 
     public void ZoomOffFinish () {
@@ -157,9 +201,11 @@ public class GameEvents : MonoBehaviour {
             return;
         }
 
-        if (ScoreManager.instance.HasCoins ()) {
-            GameObject.Find ("Bird Particles").GetComponent<ParticleSystem> ().Play ();
-            OnGameSounds.instance.PlayLoseCoin ();
+        if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
+            if (ScoreManager.instance.HasCoins ()) {
+                GameObject.Find ("Bird Particles").GetComponent<ParticleSystem> ().Play ();
+                OnGameSounds.instance.PlayLoseCoin ();
+            }
         }
 
         if (obstacleName == "branch" || obstacleName == "thorn") {
@@ -170,7 +216,9 @@ public class GameEvents : MonoBehaviour {
             OnGameSounds.instance.PlayCamHit ();
         }
 
-        ScoreManager.instance.Hit ();
+        if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
+            ScoreManager.instance.Hit ();
+        }
     }
 
     public void Reached200 () {
@@ -198,6 +246,22 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
+    public void Reached100 () {
+        inGame = false;
+        if (PlayGamesPlatform.Instance.localUser.authenticated) {
+            PlayGamesPlatform.Instance.ReportScore (TimeTrackManager.instance.GetChronCount (),
+                GPGSIds.leaderboard_duracin_en_modo_endless,
+                (bool success) => {
+                    Debug.Log ("Coins Increment: " + success);
+                });
+        }
+
+        BlackController.instance.gameObject.SetActive (true);
+        BlackController.instance.FadeIn ();
+        MainCharacterController.instance.SetPlaying (false);
+        Invoke ("PlayFinishClip", 2f);
+    }
+
     void PlayFinishClip () {
         OnGameSounds.instance.PlayLevelCompleted ();
         Invoke ("GoToMenu", 4f);
@@ -212,13 +276,21 @@ public class GameEvents : MonoBehaviour {
             return;
         }
         if (powerUpName.Equals ("shieldUp")) {
+            PowerUpParticles.instance.SetShieldOn ();
             MainCharacterController.instance.SetShieldOn ();
         } else if (powerUpName.Equals ("x2Up")) {
+            PowerUpParticles.instance.SetX2On ();
             ScoreManager.instance.SetCoinValue (2);
             // magneto
         } else if (powerUpName.Equals ("impulseUp")) {
+            PowerUpParticles.instance.SetImpulseOn ();
             MainCharacterController.instance.SetImpulseOn ();
-            ScoreManager.instance.SetMetersValue (3);
+            if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
+                ScoreManager.instance.SetMetersValue (3);
+            } else {
+                TimeTrackManager.instance.SetMetersValue (3);
+            }
+
             MoveFloorFrom (backgroundSpeed, backgroundSpeed * 3);
             ObjectsFactory.instance.SetSpeed (4f);
         }
@@ -231,14 +303,19 @@ public class GameEvents : MonoBehaviour {
         ScoreManager.instance.SetMetersValue (0);
         MoveFloorFrom (backgroundSpeed, backgroundSpeed / 5);
         ObjectsFactory.instance.SetSpeed (2f / 10f);
-        ObjectsFactory.instance.StopProducing();
+        ObjectsFactory.instance.StopProducing ();
         Invoke ("ThornOff", 2f);
     }
 
     public void ThornOff () {
-        ObjectsFactory.instance.Produce();
+        ObjectsFactory.instance.Produce ();
         ScoreManager.instance.SetMetersValue (1);
         MoveFloorFrom (backgroundSpeed / 5, backgroundSpeed);
         ObjectsFactory.instance.SetSpeed (2f);
+    }
+
+    public void ChronoTriggered () {
+        OnGameSounds.instance.PlayGotCoin ();
+        TimeTrackManager.instance.AddChrono ();
     }
 }

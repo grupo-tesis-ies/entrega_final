@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ChronoParentController.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\Achievement.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\CommonStatusCodes.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\CommonTypes.cs" />
@@ -122,6 +123,7 @@
      <Compile Include="Assets\Scripts\BirdBodyController.cs" />
      <Compile Include="Assets\Scripts\BlackController.cs" />
      <Compile Include="Assets\Scripts\CamController.cs" />
+     <Compile Include="Assets\Scripts\ChronoController.cs" />
      <Compile Include="Assets\Scripts\CoinController.cs" />
      <Compile Include="Assets\Scripts\CoinParentController.cs" />
      <Compile Include="Assets\Scripts\GameConstants.cs" />
@@ -140,11 +142,13 @@
      <Compile Include="Assets\Scripts\OnGameSounds.cs" />
      <Compile Include="Assets\Scripts\OnMenuSounds.cs" />
      <Compile Include="Assets\Scripts\PowerUpController.cs" />
+     <Compile Include="Assets\Scripts\PowerUpParticles.cs" />
      <Compile Include="Assets\Scripts\ScoreManager.cs" />
      <Compile Include="Assets\Scripts\ScrollerController.cs" />
      <Compile Include="Assets\Scripts\SoundManager.cs" />
      <Compile Include="Assets\Scripts\SwipeMove.cs" />
      <Compile Include="Assets\Scripts\ThornesController.cs" />
+     <Compile Include="Assets\Scripts\TimeTrackManager.cs" />
      <Compile Include="Assets\Scripts\TitleBoard.cs" />
      <Compile Include="Assets\Scripts\TitleWords.cs" />
      <None Include="Assets\GooglePlayGames\Plugins\Android\GooglePlayGamesManifest.plugin\AndroidManifest.xml" />

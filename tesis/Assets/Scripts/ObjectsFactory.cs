@@ -8,6 +8,7 @@ public class ObjectsFactory : MonoBehaviour {
     public GameObject[] obstacles;
     public GameObject[] powerUps;
     public GameObject coin;
+    public GameObject chrono;
 
     private float speed = 2f;
 
@@ -69,6 +70,18 @@ public class ObjectsFactory : MonoBehaviour {
         }
 
         Invoke ("InstantiatePowerUps", randomTime);
+    }
+
+    public void InstantiateChrono () {
+        float randomTime = Random.Range (8f, 13.0f);
+
+        if (isProducing) {
+            GameObject instantiated = Instantiate (chrono);
+            instantiated.transform.position = new Vector3 (Random.Range (-0.8f, 0.8f), 2.5f, instantiated.transform.position.z);
+            instantiated.GetComponent<MoveDown> ().SetMovingSpeed (speed);
+        }
+
+        Invoke ("InstantiateChrono", randomTime);
     }
 
     public void SetSpeed (float obstacleSpeed) {
