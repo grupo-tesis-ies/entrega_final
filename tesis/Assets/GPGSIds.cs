@@ -21,8 +21,12 @@
 /// Resources.
 ///
 
-public static class GPGSIds {
-    public const string leaderboard_duracin_en_modo_endless = "CgkIxfr5ztAYEAIQAA"; // <GPGSID>
-    public const string achievement_test = "CgkIxfr5ztAYEAIQAQ"; // <GPGSID>
+
+public static class GPGSIds
+{
+        public const string leaderboard_cantidad_de_monedas_test = "CgkIxfr5ztAYEAIQBA"; // <GPGSID>
+        public const string achievement_finalizar_modo_historia = "CgkIxfr5ztAYEAIQAw"; // <GPGSID>
+        public const string leaderboard_duracin_en_modo_endless = "CgkIxfr5ztAYEAIQAA"; // <GPGSID>
 
 }
+

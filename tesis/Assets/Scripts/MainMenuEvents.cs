@@ -6,17 +6,25 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MainMenuEvents : MonoBehaviour {
-    public Button signInButton;
+
+    public Sprite signedIn;
+
+    public Sprite signedOff;
+
+    public Image googlePlayButton;
+
+    public Sprite achievementsOn;
+
+    public Sprite achievementsOff;
+
+    public Image achievementsButton;
 
     void Start () {
         GameObject startButton = GameObject.Find ("startButton");
         EventSystem.current.firstSelectedGameObject = startButton;
 
-        //  ADD THIS CODE BETWEEN THESE COMMENTS
-
         // Create client configuration
-        PlayGamesClientConfiguration config = new
-        PlayGamesClientConfiguration.Builder ()
+        PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder ()
             .Build ();
 
         // Enable debugging output (recommended)
@@ -37,17 +45,40 @@ public class MainMenuEvents : MonoBehaviour {
         } else {
             // Sign out of play games
             PlayGamesPlatform.Instance.SignOut ();
-
+            googlePlayButton.sprite = signedOff;
+            achievementsButton.sprite = achievementsOff;
             //  authStatus.text = "";
         }
     }
 
     public void SignInCallback (bool success) {
         if (success) {
-            // Show the user's name
+            Debug.Log ("Signed in!");
+            googlePlayButton.sprite = signedIn;
+            achievementsButton.sprite = achievementsOn;
             //authStatus.text = "Signed in as: " + Social.localUser.userName;
         } else {
+            Debug.Log ("Could not Sign In!");
+            googlePlayButton.sprite = signedOff;
+            achievementsButton.sprite = achievementsOff;
             //  authStatus.text = "Sign-in failed";
+        }
+    }
+
+    public void ShowAchievements () {
+        if (PlayGamesPlatform.Instance.localUser.authenticated) {
+            PlayGamesPlatform.Instance.ShowAchievementsUI ();
+        } else {
+            Debug.Log ("Cannot show Achievements, not logged in");
+        }
+    }
+
+    public void ShowLeaderboards() {
+        if (PlayGamesPlatform.Instance.localUser.authenticated) {
+            PlayGamesPlatform.Instance.ShowLeaderboardUI();
+        }
+        else {
+          Debug.Log("Cannot show leaderxboard: not authenticated");
         }
     }
 }

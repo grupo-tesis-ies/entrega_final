@@ -15,6 +15,8 @@ public class MainCharacterController : MonoBehaviour {
     private bool isImpulseUp;
     private bool isPlaying;
 
+    private GameObject previousHit;
+
     void Awake () {
         if (instance == null) {
             instance = this;
@@ -49,7 +51,7 @@ public class MainCharacterController : MonoBehaviour {
     }
 
     private void OnTriggerEnter (Collider other) {
-        if (!instance.isPlaying) {
+        if (!instance.isPlaying || other.gameObject.Equals(previousHit)) {
             return;
         }
 
@@ -61,12 +63,23 @@ public class MainCharacterController : MonoBehaviour {
                 return;
             }
             if("berry".Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
-                GetComponent<SwipeMove>().SlowDown();
+                GetComponent<SwipeMove>().SlowDownHor();
             }
+            if("thorn".Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
+                GetComponent<SwipeMove>().SlowDownHor();
+                GameEvents.instance.ThornHit();
+                instance.GetComponent<Animator>().speed = 0.5f;
+                Invoke ("ThornOff", 2f);
+            }
+            previousHit = other.gameObject;
             StartCoroutine (AfterHit ());
             GameEvents.instance.GotHit (other.GetComponent<Obstacle>().GetName());
             instance.GetComponent<Animator>().SetTrigger (GameConstants.ANIMATION_HIT);
         }
+    }
+
+    void ThornOff() {
+        instance.GetComponent<Animator>().speed = 1f;
     }
 
     public void SetImpulseOn () {

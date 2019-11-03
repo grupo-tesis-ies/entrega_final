@@ -117,6 +117,7 @@
      <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
      <Compile Include="Assets\GooglePlayGames\Platforms\TokenClient.cs" />
      <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
+     <Compile Include="Assets\GPGSIds.cs" />
      <Compile Include="Assets\Scripts\BirdAnimatorController.cs" />
      <Compile Include="Assets\Scripts\BirdBodyController.cs" />
      <Compile Include="Assets\Scripts\BlackController.cs" />
@@ -125,9 +126,9 @@
      <Compile Include="Assets\Scripts\CoinParentController.cs" />
      <Compile Include="Assets\Scripts\GameConstants.cs" />
      <Compile Include="Assets\Scripts\GameEvents.cs" />
+     <Compile Include="Assets\Scripts\GameMenuManager.cs" />
      <Compile Include="Assets\Scripts\GameParameters.cs" />
      <Compile Include="Assets\Scripts\GarbageCollector.cs" />
-     <Compile Include="Assets\Scripts\GPGSIds.cs" />
      <Compile Include="Assets\Scripts\MainCharacterController.cs" />
      <Compile Include="Assets\Scripts\MainMenuEvents.cs" />
      <Compile Include="Assets\Scripts\MainMenuManager.cs" />

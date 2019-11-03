@@ -317,7 +317,6 @@ GameObject:
   - component: {fileID: 200935836}
   - component: {fileID: 200935839}
   - component: {fileID: 200935840}
-  - component: {fileID: 200935841}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: Untagged
@@ -421,19 +420,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdebeca55a54c4a13b5450ba68a41556, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &200935841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 200935835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d32e10f7e66e4deb97a32bd539d4ae3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  signInButton: {fileID: 0}
 --- !u!1 &205937486
 GameObject:
   m_ObjectHideFlags: 0
@@ -743,7 +729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 390936948}
   m_Layer: 0
-  m_Name: Sound
+  m_Name: Sound Efx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1190,6 +1176,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 649518203}
         m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1209390389}
+        m_MethodName: ShowLeaderboards
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2018,6 +2015,8 @@ MonoBehaviour:
   menuCanvas: {fileID: 1976985773}
   configCanvas: {fileID: 1752238723}
   buttonSound: {fileID: 8300000, guid: 3377181c97a65445f87463780b6fb450, type: 3}
+  soundEfxOn: {fileID: 21300000, guid: 7dc0962209fb5944e9f8c3f399fad3ff, type: 3}
+  soundEfxOff: {fileID: 21300000, guid: 19cc8561716beab4a8463ffb2f151cd4, type: 3}
 --- !u!1 &668976559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2258,8 +2257,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 200935841}
-        m_MethodName: SignIn
+      - m_Target: {fileID: 649518203}
+        m_MethodName: PlayButtonSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2269,8 +2268,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 649518203}
-        m_MethodName: PlayButtonSound
+      - m_Target: {fileID: 1209390389}
+        m_MethodName: SignIn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2749,7 +2748,7 @@ GameObject:
   - component: {fileID: 943989525}
   - component: {fileID: 943989524}
   m_Layer: 5
-  m_Name: Efects Btn
+  m_Name: Music Btn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2781,7 +2780,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 943989522}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -2803,7 +2802,7 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 5ece8e1cd1c28e6429c7621668ae2095, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: f72c1bbc104491347a4933061b7243f7, type: 3}
     m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
@@ -3616,6 +3615,55 @@ Transform:
   m_Father: {fileID: 1449812499}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 1.6420196e-14, y: 118.59907, z: 4.1853118e-15}
+--- !u!1 &1209390388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1209390390}
+  - component: {fileID: 1209390389}
+  m_Layer: 0
+  m_Name: MainGameEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1209390389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209390388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d32e10f7e66e4deb97a32bd539d4ae3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  signedIn: {fileID: 21300000, guid: 4679415ff0345834f9a7ad7e5f25be38, type: 3}
+  signedOff: {fileID: 21300000, guid: b1083ee79192d6541852780314fc75d2, type: 3}
+  googlePlayButton: {fileID: 744509125}
+  achievementsOn: {fileID: 21300000, guid: acc935ff38ffdfa4b95f56ff0f67d3f5, type: 3}
+  achievementsOff: {fileID: 21300000, guid: acc935ff38ffdfa4b95f56ff0f67d3f5, type: 3}
+  achievementsButton: {fileID: 1893231406}
+--- !u!4 &1209390390
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209390388}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 294.0427, y: 835.89014, z: -196.83128}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1260956450
 GameObject:
   m_ObjectHideFlags: 0
@@ -5300,6 +5348,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1209390389}
+        m_MethodName: ShowAchievements
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1893231406
@@ -5384,7 +5443,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1912375409}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -5406,9 +5465,9 @@ MonoBehaviour:
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 21300000, guid: 5ece8e1cd1c28e6429c7621668ae2095, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 728b59356164b1b4d9738651cc5142aa, type: 3}
     m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 21300000, guid: 19cc8561716beab4a8463ffb2f151cd4, type: 3}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
@@ -5426,6 +5485,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 649518203}
+        m_MethodName: TriggerMusic
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1912375412}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5453,7 +5523,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 19cc8561716beab4a8463ffb2f151cd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 728b59356164b1b4d9738651cc5142aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5676,7 +5746,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2025385722}
   m_Layer: 0
-  m_Name: Efects
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5711,7 +5781,7 @@ GameObject:
   - component: {fileID: 2029308318}
   - component: {fileID: 2029308317}
   m_Layer: 5
-  m_Name: Efects Text
+  m_Name: Music Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5784,7 +5854,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Efectos
+  m_Text: Musica
 --- !u!222 &2029308319
 CanvasRenderer:
   m_ObjectHideFlags: 0

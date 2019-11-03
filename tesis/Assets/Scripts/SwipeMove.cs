@@ -107,10 +107,9 @@ public class SwipeMove : MonoBehaviour {
         }
     }
 
-    public void SlowDown () {
+    public void SlowDownHor () {
         maxSpeed = minSpeed;
         StartCoroutine (ReturnSpeed ());
-
     }
 
     IEnumerator ReturnSpeed () {

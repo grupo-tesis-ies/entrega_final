@@ -89,4 +89,8 @@ public class ScoreManager : MonoBehaviour {
     public void SetMetersValue (int metersValue) {
         this.metersValue = metersValue;
     }
+
+    public int GetCoinsCount() {
+        return score;
+    }
 }

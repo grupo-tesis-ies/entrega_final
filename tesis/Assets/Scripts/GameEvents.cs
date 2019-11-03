@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -60,7 +62,7 @@ public class GameEvents : MonoBehaviour {
     }
 
     void DisplayInstructions () {
-        CamController.instance.TriggerSignOut();
+        CamController.instance.TriggerSignOut ();
         Invoke ("GoToGame", 1.5f);
     }
 
@@ -160,7 +162,7 @@ public class GameEvents : MonoBehaviour {
             OnGameSounds.instance.PlayLoseCoin ();
         }
 
-        if (obstacleName == "branch") {
+        if (obstacleName == "branch" || obstacleName == "thorn") {
             OnGameSounds.instance.PlayBranchHit ();
         } else if (obstacleName == "berry") {
             OnGameSounds.instance.PlayBerriesHit ();
@@ -174,6 +176,21 @@ public class GameEvents : MonoBehaviour {
     public void Reached200 () {
         if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
             inGame = false;
+            if (PlayGamesPlatform.Instance.localUser.authenticated) {
+                PlayGamesPlatform.Instance.ReportProgress (
+                    GPGSIds.achievement_finalizar_modo_historia,
+                    100.0f, (bool success) => {
+                        Debug.Log ("History mode finished: " +
+                            success);
+                    });
+
+                PlayGamesPlatform.Instance.ReportScore (ScoreManager.instance.GetCoinsCount (),
+                    GPGSIds.leaderboard_cantidad_de_monedas_test,
+                    (bool success) => {
+                        Debug.Log ("Coins Increment: " + success);
+                    });
+            }
+
             BlackController.instance.gameObject.SetActive (true);
             BlackController.instance.FadeIn ();
             MainCharacterController.instance.SetPlaying (false);
@@ -208,5 +225,20 @@ public class GameEvents : MonoBehaviour {
 
         BirdBodyController.instance.TriggerPowerUp (powerUpName);
         OnGameSounds.instance.PlayGotPowerUp ();
+    }
+
+    public void ThornHit () {
+        ScoreManager.instance.SetMetersValue (0);
+        MoveFloorFrom (backgroundSpeed, backgroundSpeed / 5);
+        ObjectsFactory.instance.SetSpeed (2f / 10f);
+        ObjectsFactory.instance.StopProducing();
+        Invoke ("ThornOff", 2f);
+    }
+
+    public void ThornOff () {
+        ObjectsFactory.instance.Produce();
+        ScoreManager.instance.SetMetersValue (1);
+        MoveFloorFrom (backgroundSpeed / 5, backgroundSpeed);
+        ObjectsFactory.instance.SetSpeed (2f);
     }
 }

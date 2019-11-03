@@ -7,6 +7,8 @@ public class SoundManager : MonoBehaviour {
 
     public static SoundManager instance = null;
 
+    private bool isPlaying = true;
+
     void Awake () {
         if (instance == null) {
             instance = this;
@@ -17,6 +19,10 @@ public class SoundManager : MonoBehaviour {
     }
 
     public void PlaySingle (AudioClip clip) {
+        if(!instance.isPlaying) {
+            return;
+        }
+
         foreach (AudioSource source in sources) {
             if (!source.isPlaying) {
                 source.clip = clip;
@@ -27,7 +33,16 @@ public class SoundManager : MonoBehaviour {
     }
 
     public void RandomizeSfx (params AudioClip[] clips) {
+        if(!instance.isPlaying) {
+            return;
+        }
+
         int randomIndex = Random.Range (0, clips.Length);
         PlaySingle (clips[randomIndex]);
+    }
+
+    public bool TriggerMusic () {
+        instance.isPlaying = !instance.isPlaying;
+        return instance.isPlaying;
     }
 }

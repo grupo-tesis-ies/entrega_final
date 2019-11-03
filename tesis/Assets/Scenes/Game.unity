@@ -929,12 +929,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 842278580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7cc3406274ae40f6a5e17d605c73543, type: 3}
+  m_Script: {fileID: 11500000, guid: aa179674495774bb4b6a3deda92b35c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuCanvas: {fileID: 0}
-  configCanvas: {fileID: 0}
-  buttonSound: {fileID: 0}
+  pausePanel: {fileID: 2092791677}
 --- !u!4 &842278582
 Transform:
   m_ObjectHideFlags: 0
@@ -1591,6 +1589,7 @@ MonoBehaviour:
   - {fileID: 7859293534307531641, guid: 14f8522e8c1ba466ab3a8760be5ffb9a, type: 3}
   - {fileID: 4734712957273009111, guid: 34016ce78d50747b6a9d3382fdbb7829, type: 3}
   - {fileID: 6559649324689285737, guid: 9d0ac8b6ee8834f6eb320004f39d9b48, type: 3}
+  - {fileID: 3469653166979580535, guid: e5da06ef66a854434abb0c8cb31092c0, type: 3}
   powerUps:
   - {fileID: 6134036913940116235, guid: 8a4041e866aac46099c60471e0952965, type: 3}
   - {fileID: 8441277622706258090, guid: 1eda71590909743da950a9b7deb1572a, type: 3}
