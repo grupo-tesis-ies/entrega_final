@@ -1,22 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
 
     public static ScoreManager instance = null;
+
     public Text scoreText;
     public Text metersText;
+    public Text remainingTimeText;
 
     private int score;
     private float metersCounter;
     private bool isCounting;
     private int coinValue;
-    private int obstacleValue;
-    private float metersValue;
+    private float metersMultiplier;
 
     private bool isPlaying;
+    private bool isHistoryMode;
+
+    private int remainingTime;
+    private float timeCounter;
+
+    private int coinMultiplier;
 
     void Awake () {
         if (instance == null) {
@@ -25,26 +33,44 @@ public class ScoreManager : MonoBehaviour {
             Destroy (gameObject);
         }
     }
+
     void Start () {
-        isCounting = false;
-        metersCounter = 0.0f;
-        score = 0;
-        coinValue = 1;
-        metersValue = 1;
-        obstacleValue = 10;
+        instance.isCounting = false;
+        instance.metersCounter = 0.0f;
+        instance.score = 0;
+        instance.isPlaying = true;
+        instance.timeCounter = 0;
+        instance.coinMultiplier = 1;
+        instance.metersMultiplier = 1;
+
         UpdateScore ();
         UpdateMeters ();
-        isPlaying = true;
+
+        if (!GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
+            isHistoryMode = false;
+            UpdateTimer ();
+        } else {
+            isHistoryMode = true;
+        }
     }
 
     void Update () {
-        if (isCounting) {
-            metersCounter += Time.deltaTime * metersValue;
-            UpdateMeters ();
-            if ((int) metersCounter == 30 && isPlaying) {
-                GameEvents.instance.Reached200 ();
-                isPlaying = false;
+        if (instance.isCounting) {
+            if (isHistoryMode) {
+                if ((int) metersCounter == 30 && isPlaying) {
+                    GameEvents.instance.Reached200 ();
+                    instance.isPlaying = false;
+                }
+            } else {
+                timeCounter += Time.deltaTime;
+                if ((int) metersCounter == 100 && isPlaying) {
+                    GameEvents.instance.Reached100 ();
+                    instance.isPlaying = false;
+                }
+                UpdateTimer ();
             }
+            metersCounter += Time.deltaTime * GameParameters.instance.GetMetersValuePerSecond() * metersMultiplier;
+            UpdateMeters ();
         }
     }
 
@@ -56,18 +82,28 @@ public class ScoreManager : MonoBehaviour {
         metersText.text = ((int) metersCounter).ToString ("D4") + " m";
     }
 
-    public void StartMetersCounter () {
-        isCounting = true;
+    void UpdateTimer () {
+        remainingTimeText.text = ((int) (remainingTime - timeCounter)).ToString ("D3") + "s";
+    }
+
+    public void StartCounting () {
+        instance.isCounting = true;
     }
 
     public void AddCoin () {
-        score += coinValue;
+        score += GameParameters.instance.GetCoinsValue () * coinMultiplier;
 
         UpdateScore ();
     }
 
+    public void AddChrono () {
+        remainingTime += GameParameters.instance.GetChronoTimeValue ();
+
+        UpdateTimer ();
+    }
+
     public void Hit () {
-        score -= obstacleValue;
+        score -= GameParameters.instance.GetCoinsLostOnCollision ();
         if (score < 0) {
             score = 0;
         }
@@ -78,19 +114,19 @@ public class ScoreManager : MonoBehaviour {
         return score > 0;
     }
 
-    public void SetCoinValue (int coinValue) {
-        this.coinValue = coinValue;
+    public void SetCoinMultiplier (int coinMultiplier) {
+        this.coinMultiplier = coinMultiplier;
     }
 
-    public void SetObstacleValue (int obstacleValue) {
-        this.obstacleValue = obstacleValue;
+    public void SetMetersMultiplier (int metersMultiplier) {
+        this.metersMultiplier = metersMultiplier;
     }
 
-    public void SetMetersValue (int metersValue) {
-        this.metersValue = metersValue;
-    }
-
-    public int GetCoinsCount() {
+    public int GetCoinsCount () {
         return score;
+    }
+
+    public int GetChronoCount () {
+        return remainingTime;
     }
 }

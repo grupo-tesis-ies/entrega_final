@@ -56,12 +56,10 @@ public class MainMenuEvents : MonoBehaviour {
             Debug.Log ("Signed in!");
             googlePlayButton.sprite = signedIn;
             achievementsButton.sprite = achievementsOn;
-            //authStatus.text = "Signed in as: " + Social.localUser.userName;
         } else {
             Debug.Log ("Could not Sign In!");
             googlePlayButton.sprite = signedOff;
             achievementsButton.sprite = achievementsOff;
-            //  authStatus.text = "Sign-in failed";
         }
     }
 

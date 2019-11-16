@@ -28,7 +28,7 @@ public class ObjectsFactory : MonoBehaviour {
         if (isProducing) {
             int index = (int) Random.Range (0, obstacles.Length - 0.1f);
             GameObject ob = Instantiate (obstacles[index]);
-            ob.GetComponent<MoveDown> ().SetMovingSpeed (speed);
+            ob.GetComponent<MoveDown> ().SetMovingSpeed (instance.speed);
 
             bool isLeft = Random.value >= 0.5f;
             GameObject child = ob.transform.GetChild (0).gameObject;
@@ -53,7 +53,7 @@ public class ObjectsFactory : MonoBehaviour {
         if (isProducing) {
             GameObject instantiated = Instantiate (coin);
             instantiated.transform.position = new Vector3 (Random.Range (-0.8f, 0.8f), 2.5f, instantiated.transform.position.z);
-            instantiated.GetComponent<MoveDown> ().SetMovingSpeed (speed);
+            instantiated.GetComponent<MoveDown> ().SetMovingSpeed (instance.speed);
         }
 
         Invoke ("InstantiateCoin", randomTime);
@@ -66,7 +66,7 @@ public class ObjectsFactory : MonoBehaviour {
             int index = (int) Random.Range (0, powerUps.Length - 0.1f);
             GameObject instantiated = Instantiate (powerUps[index]);
             instantiated.transform.position = new Vector3 (Random.Range (-0.8f, 0.8f), 2.5f, instantiated.transform.position.z);
-            instantiated.GetComponent<MoveDown> ().SetMovingSpeed (speed);
+            instantiated.GetComponent<MoveDown> ().SetMovingSpeed (instance.speed);
         }
 
         Invoke ("InstantiatePowerUps", randomTime);
@@ -78,7 +78,7 @@ public class ObjectsFactory : MonoBehaviour {
         if (isProducing) {
             GameObject instantiated = Instantiate (chrono);
             instantiated.transform.position = new Vector3 (Random.Range (-0.8f, 0.8f), 2.5f, instantiated.transform.position.z);
-            instantiated.GetComponent<MoveDown> ().SetMovingSpeed (speed);
+            instantiated.GetComponent<MoveDown> ().SetMovingSpeed (instance.speed);
         }
 
         Invoke ("InstantiateChrono", randomTime);
@@ -86,7 +86,7 @@ public class ObjectsFactory : MonoBehaviour {
 
     public void SetSpeed (float obstacleSpeed) {
         instance.speed = obstacleSpeed;
-        foreach (MoveDown moveDown in GameObject.FindObjectsOfType (typeof (MoveDown))) {
+        foreach (MoveDown moveDown in Resources.FindObjectsOfTypeAll (typeof (MoveDown))) {
             moveDown.SetMovingSpeed (obstacleSpeed);
         }
     }

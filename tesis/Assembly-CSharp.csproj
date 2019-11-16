@@ -55,7 +55,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ChronoParentController.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\Achievement.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\CommonStatusCodes.cs" />
      <Compile Include="Assets\GooglePlayGames\BasicApi\CommonTypes.cs" />
@@ -124,6 +123,7 @@
      <Compile Include="Assets\Scripts\BlackController.cs" />
      <Compile Include="Assets\Scripts\CamController.cs" />
      <Compile Include="Assets\Scripts\ChronoController.cs" />
+     <Compile Include="Assets\Scripts\ChronoParentController.cs" />
      <Compile Include="Assets\Scripts\CoinController.cs" />
      <Compile Include="Assets\Scripts\CoinParentController.cs" />
      <Compile Include="Assets\Scripts\GameConstants.cs" />
@@ -147,10 +147,9 @@
      <Compile Include="Assets\Scripts\ScrollerController.cs" />
      <Compile Include="Assets\Scripts\SoundManager.cs" />
      <Compile Include="Assets\Scripts\SwipeMove.cs" />
-     <Compile Include="Assets\Scripts\ThornesController.cs" />
-     <Compile Include="Assets\Scripts\TimeTrackManager.cs" />
      <Compile Include="Assets\Scripts\TitleBoard.cs" />
      <Compile Include="Assets\Scripts\TitleWords.cs" />
+     <Compile Include="Assets\Scripts\TutorialController.cs" />
      <None Include="Assets\GooglePlayGames\Plugins\Android\GooglePlayGamesManifest.plugin\AndroidManifest.xml" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/espinaco/Documents/tesis/entrega_final/tesis/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

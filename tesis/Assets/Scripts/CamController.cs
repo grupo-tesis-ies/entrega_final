@@ -22,6 +22,10 @@ public class CamController : MonoBehaviour {
         instance.GetComponent<Animator> ().SetTrigger (GameConstants.ANIMATION_SIGN_IN);
     }
 
+    public void TriggerSignInFinish () {
+        TutorialController.instance.SignInFinish();
+    }
+
     public void TriggerSignOut () {
         instance.GetComponent<Animator> ().SetTrigger (GameConstants.ANIMATION_SIGN_OUT);
     }

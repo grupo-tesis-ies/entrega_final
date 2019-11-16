@@ -62,14 +62,15 @@ public class MainCharacterController : MonoBehaviour {
                 other.gameObject.GetComponent<Obstacle>().SetDropping(true);
                 return;
             }
-            if("berry".Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
-                GetComponent<SwipeMove>().SlowDownHor();
+            if(GameConstants.OBSTACLE_TAG_BERRY.Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
+                GetComponent<SwipeMove>().SetSlowed();
+                Invoke ("SlowOff", 5f);
             }
-            if("thorn".Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
-                GetComponent<SwipeMove>().SlowDownHor();
+            if(GameConstants.OBSTACLE_TAG_THORN.Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
+                GetComponent<SwipeMove>().SetSlowed();
                 GameEvents.instance.ThornHit();
                 instance.GetComponent<Animator>().speed = 0.5f;
-                Invoke ("ThornOff", 2f);
+                Invoke ("SlowOff", 2f);
             }
             previousHit = other.gameObject;
             StartCoroutine (AfterHit ());
@@ -78,7 +79,8 @@ public class MainCharacterController : MonoBehaviour {
         }
     }
 
-    void ThornOff() {
+    void SlowOff() {
+        GetComponent<SwipeMove>().ReturnSpeed();
         instance.GetComponent<Animator>().speed = 1f;
     }
 

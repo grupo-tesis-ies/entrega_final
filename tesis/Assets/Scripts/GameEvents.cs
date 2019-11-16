@@ -49,15 +49,15 @@ public class GameEvents : MonoBehaviour {
             OnMenuSounds.instance.PlayBoard ();
             BlackController.instance.gameObject.SetActive (false);
 
-            MainMenuManager.instance.SetHistoryModeFinished (PlayerPrefs.GetInt("storyMode") == 1);
+            MainMenuManager.instance.SetHistoryModeFinished (PlayerPrefs.GetInt ("storyMode") == 1);
         } else if (GameConstants.SCENE_GAME.Equals (activeScene)) {
             inGame = true;
-            MoveFloorFrom (BACKGROUND_IDLE_SPEED, backgroundSpeed);
+            MoveFloorFrom (BACKGROUND_IDLE_SPEED, GameParameters.instance.GetBackgroundSpeed ());
             MainCharacterController.instance.Launch ();
             BlackController.instance.gameObject.SetActive (false);
         } else if (GameConstants.SCENE_TIME_TRACK.Equals (activeScene)) {
             inGame = true;
-            MoveFloorFrom (BACKGROUND_IDLE_SPEED, backgroundSpeed);
+            MoveFloorFrom (BACKGROUND_IDLE_SPEED, GameParameters.instance.GetBackgroundSpeed ());
             MainCharacterController.instance.Launch ();
             BlackController.instance.gameObject.SetActive (false);
         }
@@ -68,13 +68,12 @@ public class GameEvents : MonoBehaviour {
         instance.isEasyMode = isEasyMode;
         if (isStoryMode) {
             CamController.instance.TriggerSignIn ();
-            Invoke ("DisplayInstructions", 3f);
         } else {
             GoToGame ();
         }
     }
 
-    void DisplayInstructions () {
+    public void DisplayInstructionsOff () {
         CamController.instance.TriggerSignOut ();
         Invoke ("GoToGame", 1.5f);
     }
@@ -120,15 +119,15 @@ public class GameEvents : MonoBehaviour {
         MainCharacterController.instance.SetMoving (false);
         MainCharacterController.instance.SetSwipe (true);
 
+        ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed ());
         Invoke ("InstantiateObs", INVOKE_TIME_INSTANTIATE_OBS);
         Invoke ("InstantiatePowerUps", INVOKE_TIME_INSTANTIATE_POWER_UPS);
         if (GameConstants.SCENE_TIME_TRACK.Equals (SceneManager.GetActiveScene ().name)) {
-            TimeTrackManager.instance.StartMetersCounter ();
             Invoke ("InstantiateChrono", INVOKE_TIME_INSTANTIATE_CHRONO);
         } else {
             Invoke ("InstantiateCoin", INVOKE_TIME_INSTANTIATE_COIN);
-            ScoreManager.instance.StartMetersCounter ();
         }
+        ScoreManager.instance.StartCounting ();
     }
 
     void InstantiateObs () {
@@ -161,16 +160,13 @@ public class GameEvents : MonoBehaviour {
         if (stateInfo.IsTag ("shield")) {
             MainCharacterController.instance.SetShieldOff ();
         } else if (stateInfo.IsTag ("x2")) {
-            ScoreManager.instance.SetCoinValue (1);
+            ScoreManager.instance.SetCoinMultiplier (1);
         } else if (stateInfo.IsTag ("impulse")) {
             MainCharacterController.instance.SetImpulseOff ();
-            if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
-                ScoreManager.instance.SetMetersValue (1);
-            } else {
-                TimeTrackManager.instance.SetMetersValue (1);
-            }
-            MoveFloorFrom (backgroundSpeed * 3, backgroundSpeed);
-            ObjectsFactory.instance.SetSpeed (2f);
+            ScoreManager.instance.SetMetersMultiplier (1);
+
+            MoveFloorFrom (GameParameters.instance.GetBackgroundSpeed () * 3, GameParameters.instance.GetBackgroundSpeed ());
+            ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed ());
         }
         PowerUpParticles.instance.DisableEmission ();
     }
@@ -230,8 +226,8 @@ public class GameEvents : MonoBehaviour {
                         Debug.Log ("Coins Increment: " + success);
                     });
             }
-            PlayerPrefs.SetInt("storyMode", 1);
-            PlayerPrefs.Save();
+            PlayerPrefs.SetInt ("storyMode", 1);
+            PlayerPrefs.Save ();
 
             BlackController.instance.gameObject.SetActive (true);
             BlackController.instance.FadeIn ();
@@ -243,7 +239,7 @@ public class GameEvents : MonoBehaviour {
     public void Reached100 () {
         inGame = false;
         if (PlayGamesPlatform.Instance.localUser.authenticated) {
-            PlayGamesPlatform.Instance.ReportScore (TimeTrackManager.instance.GetChronCount (),
+            PlayGamesPlatform.Instance.ReportScore (ScoreManager.instance.GetChronoCount (),
                 GPGSIds.leaderboard_duracin_en_modo_endless,
                 (bool success) => {
                     Debug.Log ("Coins Increment: " + success);
@@ -269,24 +265,21 @@ public class GameEvents : MonoBehaviour {
         if (!inGame) {
             return;
         }
+
         if (powerUpName.Equals ("shieldUp")) {
             PowerUpParticles.instance.SetShieldOn ();
             MainCharacterController.instance.SetShieldOn ();
         } else if (powerUpName.Equals ("x2Up")) {
             PowerUpParticles.instance.SetX2On ();
-            ScoreManager.instance.SetCoinValue (2);
+            ScoreManager.instance.SetCoinMultiplier (GameParameters.instance.GetCoinsPowerUpMultiplier ());
             // magneto
         } else if (powerUpName.Equals ("impulseUp")) {
             PowerUpParticles.instance.SetImpulseOn ();
             MainCharacterController.instance.SetImpulseOn ();
-            if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
-                ScoreManager.instance.SetMetersValue (3);
-            } else {
-                TimeTrackManager.instance.SetMetersValue (3);
-            }
+            ScoreManager.instance.SetMetersMultiplier ((int) GameParameters.instance.GetImpulseSpeedMultiplier ());
 
-            MoveFloorFrom (backgroundSpeed, backgroundSpeed * 3);
-            ObjectsFactory.instance.SetSpeed (4f);
+            MoveFloorFrom (GameParameters.instance.GetBackgroundSpeed (), GameParameters.instance.GetBackgroundSpeed () * GameParameters.instance.GetImpulseSpeedMultiplier ());
+            ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed () * GameParameters.instance.GetImpulseSpeedMultiplier ());
         }
 
         BirdBodyController.instance.TriggerPowerUp (powerUpName);
@@ -294,22 +287,22 @@ public class GameEvents : MonoBehaviour {
     }
 
     public void ThornHit () {
-        ScoreManager.instance.SetMetersValue (0);
-        MoveFloorFrom (backgroundSpeed, backgroundSpeed / 5);
-        ObjectsFactory.instance.SetSpeed (2f / 10f);
+        ScoreManager.instance.SetMetersMultiplier (0);
+        MoveFloorFrom (GameParameters.instance.GetBackgroundSpeed (), GameParameters.instance.GetBackgroundSpeed () / GameParameters.instance.GetThornSpeedMultiplier ());
+        ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed () / GameParameters.instance.GetThornSpeedMultiplier ());
         ObjectsFactory.instance.StopProducing ();
         Invoke ("ThornOff", 2f);
     }
 
     public void ThornOff () {
         ObjectsFactory.instance.Produce ();
-        ScoreManager.instance.SetMetersValue (1);
-        MoveFloorFrom (backgroundSpeed / 5, backgroundSpeed);
-        ObjectsFactory.instance.SetSpeed (2f);
+        ScoreManager.instance.SetMetersMultiplier (1);
+        MoveFloorFrom (GameParameters.instance.GetBackgroundSpeed () / GameParameters.instance.GetThornSpeedMultiplier (), GameParameters.instance.GetBackgroundSpeed ());
+        ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed ());
     }
 
     public void ChronoTriggered () {
         OnGameSounds.instance.PlayGotCoin ();
-        TimeTrackManager.instance.AddChrono ();
+        ScoreManager.instance.AddChrono ();
     }
 }

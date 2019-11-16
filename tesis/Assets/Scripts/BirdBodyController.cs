@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdBodyController : MonoBehaviour {
+    
     public static BirdBodyController instance = null;
 
     void Awake () {
