@@ -6,6 +6,7 @@ public class OnMenuSounds : MonoBehaviour {
     public static OnMenuSounds instance = null;
 
     public AudioClip boardClip;
+    public AudioClip launchClip;
 
     void Awake () {
         if (instance == null) {
@@ -17,5 +18,9 @@ public class OnMenuSounds : MonoBehaviour {
 
     public void PlayBoard () {
         SoundManager.instance.PlaySingle (boardClip);
+    }
+
+    public void PlayFlyLaunch() {
+        SoundManager.instance.PlaySingle (launchClip);
     }
 }

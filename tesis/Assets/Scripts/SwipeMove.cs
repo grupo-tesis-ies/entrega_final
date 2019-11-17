@@ -71,6 +71,11 @@ public class SwipeMove : MonoBehaviour {
         instance.isSlowed = true;
     }
 
+    public void SetSuperSlowed () {
+        instance.actualSpeed = minSpeed / 2;
+        instance.isSlowed = true;
+    }
+
     public void ReturnSpeed () {
         instance.isSlowed = false;
     }

@@ -12,7 +12,7 @@ public class ChronoController : MonoBehaviour
     }
 
     private void OnTriggerStay (Collider other) {
-        if (GameConstants.TAG_OBSTACLE.Equals (other.tag) || GameConstants.TAG_COIN.Equals (other.tag)) {
+        if ((GameConstants.TAG_OBSTACLE.Equals (other.tag) || GameConstants.TAG_COIN.Equals (other.tag)) && transform.position.y > 2f) {
             transform.position = new Vector3 (Random.Range (-0.8f, 0.8f), GameConstants.OBJECTS_SPAWN_HEIGHT, transform.position.z);
         }
     }

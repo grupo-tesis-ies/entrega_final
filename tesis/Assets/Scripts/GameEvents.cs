@@ -26,9 +26,7 @@ public class GameEvents : MonoBehaviour {
 
     private bool inGame;
 
-    private bool isStoryMode = true;
-
-    private bool isEasyMode = true;
+    public string gameMode;
 
     void Awake () {
         if (instance == null) {
@@ -63,10 +61,9 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
-    public void StartGame (bool isStoryMode, bool isEasyMode) {
-        instance.isStoryMode = isStoryMode;
-        instance.isEasyMode = isEasyMode;
-        if (isStoryMode) {
+    public void StartGame (string gameMode) {
+        instance.gameMode = gameMode;
+        if ("story".Equals (gameMode)) {
             CamController.instance.TriggerSignIn ();
         } else {
             GoToGame ();
@@ -88,10 +85,14 @@ public class GameEvents : MonoBehaviour {
         string activeScene = SceneManager.GetActiveScene ().name;
         if (GameConstants.SCENE_MENU.Equals (activeScene)) {
             Invoke ("FadeIn", INVOKE_TIME_FADE_IN);
-            if (isStoryMode) {
+            if ("story".Equals (gameMode)) {
                 Invoke ("LoadGameScene", INVOKE_TIME_LOAD_GAME_SCENE);
-            } else if (isEasyMode) {
+            } else if ("easy".Equals (gameMode)) {
                 Invoke ("LoadEasyModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
+            } else if ("medium".Equals (gameMode)) {
+                Invoke ("LoadMediumModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
+            } else if ("hard".Equals (gameMode)) {
+                Invoke ("LoadHardModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
             }
         } else if (GameConstants.SCENE_GAME.Equals (activeScene) || GameConstants.SCENE_TIME_TRACK.Equals (activeScene)) {
             StartCoroutine (StopCharacter (STOP_CHARACTER_TIME));
@@ -123,6 +124,7 @@ public class GameEvents : MonoBehaviour {
         Invoke ("InstantiateObs", INVOKE_TIME_INSTANTIATE_OBS);
         Invoke ("InstantiatePowerUps", INVOKE_TIME_INSTANTIATE_POWER_UPS);
         if (GameConstants.SCENE_TIME_TRACK.Equals (SceneManager.GetActiveScene ().name)) {
+            Invoke ("InstantiateCoin", INVOKE_TIME_INSTANTIATE_COIN);
             Invoke ("InstantiateChrono", INVOKE_TIME_INSTANTIATE_CHRONO);
         } else {
             Invoke ("InstantiateCoin", INVOKE_TIME_INSTANTIATE_COIN);
@@ -172,6 +174,7 @@ public class GameEvents : MonoBehaviour {
     }
 
     public void ZoomOffFinish () {
+        // despegue ?? OnMenuSounds.instance.PlayFlyLaunch();
         MainCharacterController.instance.Launch ();
     }
 
@@ -189,11 +192,9 @@ public class GameEvents : MonoBehaviour {
             return;
         }
 
-        if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
-            if (ScoreManager.instance.HasCoins ()) {
-                GameObject.Find ("Bird Particles").GetComponent<ParticleSystem> ().Play ();
-                OnGameSounds.instance.PlayLoseCoin ();
-            }
+        if (ScoreManager.instance.HasCoins ()) {
+            GameObject.Find ("Bird Particles").GetComponent<ParticleSystem> ().Play ();
+            OnGameSounds.instance.PlayLoseCoin ();
         }
 
         if (obstacleName == "branch" || obstacleName == "thorn") {
@@ -204,12 +205,18 @@ public class GameEvents : MonoBehaviour {
             OnGameSounds.instance.PlayCamHit ();
         }
 
-        if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
-            ScoreManager.instance.Hit ();
+        ScoreManager.instance.Hit ();
+    }
+
+    public void Finished () {
+        if ("story".Equals (gameMode)) {
+            FinishedStory ();
+        } else {
+            FinishedTrack ();
         }
     }
 
-    public void Reached200 () {
+    public void FinishedStory () {
         if (GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
             inGame = false;
             if (PlayGamesPlatform.Instance.localUser.authenticated) {
@@ -227,7 +234,7 @@ public class GameEvents : MonoBehaviour {
                     });
             }
             PlayerPrefs.SetInt ("storyMode", 1);
-            PlayerPrefs.Save ();
+            UpdateCoins ();
 
             BlackController.instance.gameObject.SetActive (true);
             BlackController.instance.FadeIn ();
@@ -236,7 +243,13 @@ public class GameEvents : MonoBehaviour {
         }
     }
 
-    public void Reached100 () {
+    void UpdateCoins () {
+        int coins = PlayerPrefs.GetInt ("coinsCount", 0);
+        PlayerPrefs.SetInt ("coinsCount", coins + ScoreManager.instance.GetCoinsCount ());
+        PlayerPrefs.Save ();
+    }
+
+    public void FinishedTrack () {
         inGame = false;
         if (PlayGamesPlatform.Instance.localUser.authenticated) {
             PlayGamesPlatform.Instance.ReportScore (ScoreManager.instance.GetChronoCount (),
@@ -246,6 +259,7 @@ public class GameEvents : MonoBehaviour {
                 });
         }
 
+        UpdateCoins ();
         BlackController.instance.gameObject.SetActive (true);
         BlackController.instance.FadeIn ();
         MainCharacterController.instance.SetPlaying (false);
@@ -272,7 +286,6 @@ public class GameEvents : MonoBehaviour {
         } else if (powerUpName.Equals ("x2Up")) {
             PowerUpParticles.instance.SetX2On ();
             ScoreManager.instance.SetCoinMultiplier (GameParameters.instance.GetCoinsPowerUpMultiplier ());
-            // magneto
         } else if (powerUpName.Equals ("impulseUp")) {
             PowerUpParticles.instance.SetImpulseOn ();
             MainCharacterController.instance.SetImpulseOn ();
@@ -282,8 +295,8 @@ public class GameEvents : MonoBehaviour {
             ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed () * GameParameters.instance.GetImpulseSpeedMultiplier ());
         }
 
-        BirdBodyController.instance.TriggerPowerUp (powerUpName);
         OnGameSounds.instance.PlayGotPowerUp ();
+        BirdBodyController.instance.TriggerPowerUp (powerUpName);
     }
 
     public void ThornHit () {
@@ -291,6 +304,7 @@ public class GameEvents : MonoBehaviour {
         MoveFloorFrom (GameParameters.instance.GetBackgroundSpeed (), GameParameters.instance.GetBackgroundSpeed () / GameParameters.instance.GetThornSpeedMultiplier ());
         ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed () / GameParameters.instance.GetThornSpeedMultiplier ());
         ObjectsFactory.instance.StopProducing ();
+        SwipeMove.instance.SetSuperSlowed ();
         Invoke ("ThornOff", 2f);
     }
 
@@ -298,11 +312,16 @@ public class GameEvents : MonoBehaviour {
         ObjectsFactory.instance.Produce ();
         ScoreManager.instance.SetMetersMultiplier (1);
         MoveFloorFrom (GameParameters.instance.GetBackgroundSpeed () / GameParameters.instance.GetThornSpeedMultiplier (), GameParameters.instance.GetBackgroundSpeed ());
+        SwipeMove.instance.ReturnSpeed ();
         ObjectsFactory.instance.SetSpeed (GameParameters.instance.GetObjectsSpeed ());
     }
 
     public void ChronoTriggered () {
         OnGameSounds.instance.PlayGotCoin ();
         ScoreManager.instance.AddChrono ();
+    }
+
+    public string GetGameMode () {
+        return gameMode;
     }
 }

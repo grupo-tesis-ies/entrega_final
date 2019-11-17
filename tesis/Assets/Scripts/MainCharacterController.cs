@@ -62,11 +62,12 @@ public class MainCharacterController : MonoBehaviour {
                 other.gameObject.GetComponent<Obstacle>().SetDropping(true);
                 return;
             }
-            if(GameConstants.OBSTACLE_TAG_BERRY.Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
+
+            if(GameConstants.OBSTACLE_BERRY.Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
                 GetComponent<SwipeMove>().SetSlowed();
                 Invoke ("SlowOff", 5f);
             }
-            if(GameConstants.OBSTACLE_TAG_THORN.Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
+            if(GameConstants.OBSTACLE_THORN.Equals(other.gameObject.GetComponent<Obstacle>().GetName())) {
                 GetComponent<SwipeMove>().SetSlowed();
                 GameEvents.instance.ThornHit();
                 instance.GetComponent<Animator>().speed = 0.5f;
@@ -85,6 +86,7 @@ public class MainCharacterController : MonoBehaviour {
     }
 
     public void SetImpulseOn () {
+        SwipeMove.instance.ReturnSpeed();
         instance.GetComponent<Animator>().speed = 2;
         instance.isImpulseUp = true;
     }
@@ -118,5 +120,13 @@ public class MainCharacterController : MonoBehaviour {
 
     public void SetPlaying (bool isPlaying) {
         this.isPlaying = isPlaying;
+    }
+
+    public bool IsImpulseUp() {
+        return isImpulseUp;
+    }
+
+    public Vector3 GetPosition() {
+        return instance.transform.position;
     }
 }

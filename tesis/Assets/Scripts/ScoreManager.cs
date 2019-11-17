@@ -26,6 +26,8 @@ public class ScoreManager : MonoBehaviour {
 
     private int coinMultiplier;
 
+    private int metersToFinish;
+
     void Awake () {
         if (instance == null) {
             instance = this;
@@ -48,28 +50,27 @@ public class ScoreManager : MonoBehaviour {
 
         if (!GameConstants.SCENE_GAME.Equals (SceneManager.GetActiveScene ().name)) {
             isHistoryMode = false;
+            instance.remainingTime = GameParameters.instance.GetTimeByMode (GameEvents.instance.GetGameMode ());
             UpdateTimer ();
         } else {
             isHistoryMode = true;
         }
+
+        metersToFinish = GameParameters.instance.GetMetersToFinishByMode (GameEvents.instance.GetGameMode ());
     }
 
     void Update () {
         if (instance.isCounting) {
-            if (isHistoryMode) {
-                if ((int) metersCounter == 30 && isPlaying) {
-                    GameEvents.instance.Reached200 ();
-                    instance.isPlaying = false;
-                }
-            } else {
+            if (!isHistoryMode) {
                 timeCounter += Time.deltaTime;
-                if ((int) metersCounter == 100 && isPlaying) {
-                    GameEvents.instance.Reached100 ();
-                    instance.isPlaying = false;
-                }
                 UpdateTimer ();
             }
-            metersCounter += Time.deltaTime * GameParameters.instance.GetMetersValuePerSecond() * metersMultiplier;
+            if ((int) metersCounter == metersToFinish && isPlaying) {
+                GameEvents.instance.Finished ();
+                instance.isPlaying = false;
+            }
+
+            metersCounter += Time.deltaTime * metersMultiplier;
             UpdateMeters ();
         }
     }

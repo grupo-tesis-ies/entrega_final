@@ -33,6 +33,6 @@ public class GameConstants : MonoBehaviour {
 
     public const float BIRD_FLIGHT_SPEED = 2f;
 
-    public const string OBSTACLE_TAG_BERRY = "berry";
-    public const string OBSTACLE_TAG_THORN = "thorn";
+    public const string OBSTACLE_BERRY = "berry";
+    public const string OBSTACLE_THORN = "thorn";
 }

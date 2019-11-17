@@ -50,7 +50,7 @@ public class MainMenuManager : MonoBehaviour {
     }
 
     public void StartGame () {
-        GameEvents.instance.StartGame (true, true);
+        GameEvents.instance.StartGame ("story");
         menuCanvas.SetActive (false);
         difficultyCanvas.SetActive (false);
         modeCanvas.SetActive (false);
@@ -92,18 +92,24 @@ public class MainMenuManager : MonoBehaviour {
     }
 
     public void StartEasyMode () {
-        GameEvents.instance.StartGame (false, true);
+        GameEvents.instance.StartGame ("easy");
+        DisableCanvas ();
+    }
+
+    public void StartMediumMode () {
+        GameEvents.instance.StartGame ("medium");
+        DisableCanvas ();
+    }
+
+    public void StartHardMode () {
+        GameEvents.instance.StartGame ("hard");
+        DisableCanvas ();
+    }
+
+    void DisableCanvas () {
         menuCanvas.SetActive (false);
         difficultyCanvas.SetActive (false);
         modeCanvas.SetActive (false);
         titleParent.SetActive (false);
-    }
-
-    public void StartMediumMode () {
-
-    }
-
-    public void StartHardMode () {
-
     }
 }

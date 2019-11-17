@@ -10,9 +10,10 @@ public class ObjectsFactory : MonoBehaviour {
     public GameObject coin;
     public GameObject chrono;
 
-    private float speed = 2f;
+    private float speed;
 
     private bool isProducing = true;
+    private GameObject lastObstacle;
 
     void Awake () {
         if (instance == null) {
@@ -23,11 +24,19 @@ public class ObjectsFactory : MonoBehaviour {
     }
 
     public void InstantiateObs () {
-        float randomTime = Random.Range (1.0f, 1.3f);
+        float randomTime = Random.Range (GameParameters.instance.GetObsMinSpawnTime (), GameParameters.instance.GetObsMaxSpawnTime ());
 
         if (isProducing) {
-            int index = (int) Random.Range (0, obstacles.Length - 0.1f);
-            GameObject ob = Instantiate (obstacles[index]);
+            int index;
+            GameObject toInstantiate;
+
+            do {
+                index = (int) Random.Range (0, obstacles.Length - 0.1f);
+                toInstantiate = obstacles[index];
+            } while (lastObstacle != null && toInstantiate.name.Equals (lastObstacle.name));
+            GameObject ob = Instantiate (toInstantiate);
+            lastObstacle = ob;
+
             ob.GetComponent<MoveDown> ().SetMovingSpeed (instance.speed);
 
             bool isLeft = Random.value >= 0.5f;
@@ -39,7 +48,11 @@ public class ObjectsFactory : MonoBehaviour {
             if (ob.tag != "Cam_tmp") {
                 if (!isLeft) {
                     ob.transform.position = new Vector3 (ob.transform.position.x * -1, ob.transform.position.y, ob.transform.position.z);
-                    child.transform.rotation = Quaternion.Euler (0, -180, 0);
+                    if (GameConstants.OBSTACLE_THORN.Equals(child.GetComponent<Obstacle> ().GetName())) {
+                        child.transform.rotation = Quaternion.Euler (-90, -180, 0);
+                    } else {
+                        child.transform.rotation = Quaternion.Euler (0, -180, 0);
+                    }
                 }
             }
         }
@@ -48,7 +61,7 @@ public class ObjectsFactory : MonoBehaviour {
     }
 
     public void InstantiateCoin () {
-        float randomTime = Random.Range (0.5f, 0.8f);
+        float randomTime = Random.Range (GameParameters.instance.GetCoinsMinSpawnTime (), GameParameters.instance.GetCoinsMaxSpawnTime ());
 
         if (isProducing) {
             GameObject instantiated = Instantiate (coin);
@@ -60,7 +73,7 @@ public class ObjectsFactory : MonoBehaviour {
     }
 
     public void InstantiatePowerUps () {
-        float randomTime = Random.Range (10.0f, 17.0f);
+        float randomTime = Random.Range (GameParameters.instance.GetPowerUpMinSpawnTime (), GameParameters.instance.GetPowerUpMaxSpawnTime ());
 
         if (isProducing) {
             int index = (int) Random.Range (0, powerUps.Length - 0.1f);
@@ -73,7 +86,7 @@ public class ObjectsFactory : MonoBehaviour {
     }
 
     public void InstantiateChrono () {
-        float randomTime = Random.Range (8f, 13.0f);
+        float randomTime = Random.Range (GameParameters.instance.GetChronoMinSpawnTime (), GameParameters.instance.GetChronoMaxSpawnTime ());
 
         if (isProducing) {
             GameObject instantiated = Instantiate (chrono);

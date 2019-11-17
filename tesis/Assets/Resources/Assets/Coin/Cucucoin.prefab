@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a97c29d56b3f4e91967a0c78e073656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvents: {fileID: 0}
 --- !u!54 &-6502990863509056742
 Rigidbody:
   m_ObjectHideFlags: 0
