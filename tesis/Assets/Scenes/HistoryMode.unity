@@ -256,7 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59f96c2dc88b6439ea9cf4c3624ee1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 
+  gameMode: story
 --- !u!4 &197906268
 Transform:
   m_ObjectHideFlags: 0
@@ -7003,23 +7003,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f972ae0a0a1f4fa1a8ea13cf73bf52a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  birdVerticalSpeed: 0
   birdSlideSpeed: 2
   impulseSpeedMultiplier: 3
   thornSpeedMultiplier: 10
-  metersValuePerSecond: 1
-  coinsValue: 1
+  coinsValue: 10
   coinsLostOnCollision: 10
   coinsPowerUpMultiplier: 2
-  story_backgroundSpeed: 0
-  story_obstaculesSpeed: 0
-  story_obstaclesMinSpawnTime: 0
-  story_obstaclesMaxSpawnTime: 0
-  story_coinsMinSpawnTime: 0
-  story_coinsMaxSpawnTime: 0
-  story_powerUpMinSpawnTime: 0
-  story_powerUpMaxSpawnTime: 0
-  story_metersToFinish: 0
+  story_backgroundSpeed: 1.4
+  story_obstaculesSpeed: 2
+  story_obstaclesMinSpawnTime: 1
+  story_obstaclesMaxSpawnTime: 1.5
+  story_coinsMinSpawnTime: 0.5
+  story_coinsMaxSpawnTime: 0.8
+  story_powerUpMinSpawnTime: 10
+  story_powerUpMaxSpawnTime: 12
+  story_metersToFinish: 30
   easy_initialTime: 0
   easy_metersToFinish: 0
   easy_chronoTimeValue: 0

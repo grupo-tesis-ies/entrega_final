@@ -30,10 +30,16 @@ public class ObjectsFactory : MonoBehaviour {
             int index;
             GameObject toInstantiate;
 
-            do {
-                index = (int) Random.Range (0, obstacles.Length - 0.1f);
-                toInstantiate = obstacles[index];
-            } while (lastObstacle != null && toInstantiate.name.Equals (lastObstacle.name));
+            index = (int) Random.Range (0, obstacles.Length - 0.1f);
+            toInstantiate = obstacles[index];
+
+            if (lastObstacle != null) {
+                do {
+                    index = (int) Random.Range (0, obstacles.Length - 0.1f);
+                    toInstantiate = obstacles[index];
+                } while (toInstantiate.transform.GetChild (0).gameObject.GetComponent<Obstacle> ().GetName ().Equals (lastObstacle.transform.GetChild (0).gameObject.GetComponent<Obstacle> ().GetName ()));
+            }
+
             GameObject ob = Instantiate (toInstantiate);
             lastObstacle = ob;
 
@@ -48,7 +54,7 @@ public class ObjectsFactory : MonoBehaviour {
             if (ob.tag != "Cam_tmp") {
                 if (!isLeft) {
                     ob.transform.position = new Vector3 (ob.transform.position.x * -1, ob.transform.position.y, ob.transform.position.z);
-                    if (GameConstants.OBSTACLE_THORN.Equals(child.GetComponent<Obstacle> ().GetName())) {
+                    if (GameConstants.OBSTACLE_THORN.Equals (child.GetComponent<Obstacle> ().GetName ())) {
                         child.transform.rotation = Quaternion.Euler (-90, -180, 0);
                     } else {
                         child.transform.rotation = Quaternion.Euler (0, -180, 0);

@@ -90,9 +90,9 @@ public class GameEvents : MonoBehaviour {
             } else if ("easy".Equals (gameMode)) {
                 Invoke ("LoadEasyModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
             } else if ("medium".Equals (gameMode)) {
-                Invoke ("LoadMediumModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
+                Invoke ("LoadEasyModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
             } else if ("hard".Equals (gameMode)) {
-                Invoke ("LoadHardModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
+                Invoke ("LoadEasyModeScene", INVOKE_TIME_LOAD_GAME_SCENE);
             }
         } else if (GameConstants.SCENE_GAME.Equals (activeScene) || GameConstants.SCENE_TIME_TRACK.Equals (activeScene)) {
             StartCoroutine (StopCharacter (STOP_CHARACTER_TIME));
