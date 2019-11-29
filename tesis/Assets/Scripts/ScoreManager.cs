@@ -84,7 +84,13 @@ public class ScoreManager : MonoBehaviour {
     }
 
     void UpdateTimer () {
-        remainingTimeText.text = ((int) (remainingTime - timeCounter)).ToString ("D3") + "s";
+        if (((int) (remainingTime - timeCounter)) <= 0) {
+            isPlaying = false;
+            isCounting = false;
+            GameEvents.instance.Lose();
+        } else {
+            remainingTimeText.text = ((int) (remainingTime - timeCounter)).ToString ("D3") + "s";
+        }
     }
 
     public void StartCounting () {

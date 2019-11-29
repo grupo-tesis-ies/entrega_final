@@ -10,6 +10,8 @@ public class GameConstants : MonoBehaviour {
     public const string ANIMATION_ZOOM_OUT = "ZoomOut";
     public const string ANIMATION_SIGN_IN = "SignIn";
 
+    public const string ANIMATION_FLASH = "Flash";
+
     public const string ANIMATION_SIGN_OUT = "SignOut";
     public const string ANIMATION_TITLE_BOARD_DISPLAY = "TitleDisplay";
     public const string ANIMATION_TITLE_WORDS_DISPLAY = "Words";

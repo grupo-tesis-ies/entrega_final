@@ -2,18 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChronoController : MonoBehaviour
-{
+public class ChronoController : MonoBehaviour {
     private void OnTriggerEnter (Collider other) {
         if (GameConstants.TAG_PLAYER.Equals (other.tag)) {
-            GameEvents.instance.ChronoTriggered();
+            GameEvents.instance.ChronoTriggered ();
             Destroy (gameObject);
         }
     }
 
-    private void OnTriggerStay (Collider other) {
-        if ((GameConstants.TAG_OBSTACLE.Equals (other.tag) || GameConstants.TAG_COIN.Equals (other.tag)) && transform.position.y > 2f) {
-            transform.position = new Vector3 (Random.Range (-0.8f, 0.8f), GameConstants.OBJECTS_SPAWN_HEIGHT, transform.position.z);
+    void Update () {
+        if (MainCharacterController.instance.IsImpulseUp () && transform.position.y < 2f) {
+            transform.parent.GetComponent<MoveDown> ().enabled = false;
+            transform.position = Vector3.MoveTowards (transform.position, MainCharacterController.instance.GetPosition () + (Vector3.up * .1f), 5 * Time.deltaTime);
+        } else {
+            transform.parent.GetComponent<MoveDown> ().enabled = true;
         }
     }
 }

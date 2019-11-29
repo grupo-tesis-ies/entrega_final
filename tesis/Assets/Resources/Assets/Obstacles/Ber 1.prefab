@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fd24a4e19c34cca9583a2ebecc5e4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obsName: berry
+  obsName: thorn
 --- !u!1 &2859982546559961083
 GameObject:
   m_ObjectHideFlags: 0

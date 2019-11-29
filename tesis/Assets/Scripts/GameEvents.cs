@@ -197,11 +197,14 @@ public class GameEvents : MonoBehaviour {
             OnGameSounds.instance.PlayLoseCoin ();
         }
 
-        if (obstacleName == "branch" || obstacleName == "thorn") {
+        if (obstacleName == "branch") {
             OnGameSounds.instance.PlayBranchHit ();
-        } else if (obstacleName == "berry") {
+        } else if (obstacleName == "thorn") {
             OnGameSounds.instance.PlayBerriesHit ();
+        } else if (obstacleName == "berry") {
+            OnGameSounds.instance.PlayBranchHit ();
         } else if (obstacleName == "cam") {
+            WhiteController.instance.Flash ();
             OnGameSounds.instance.PlayCamHit ();
         }
 
@@ -268,7 +271,7 @@ public class GameEvents : MonoBehaviour {
 
     void PlayFinishClip () {
         OnGameSounds.instance.PlayLevelCompleted ();
-        Invoke ("GoToMenu", 4f);
+        Invoke ("GoToMenu", 5f);
     }
 
     void GoToMenu () {
@@ -323,5 +326,18 @@ public class GameEvents : MonoBehaviour {
 
     public string GetGameMode () {
         return gameMode;
+    }
+
+    public void Lose () {
+        inGame = false;
+        BlackController.instance.gameObject.SetActive (true);
+        BlackController.instance.FadeIn ();
+        MainCharacterController.instance.SetPlaying (false);
+        Invoke ("GameOverText", 2f);
+        Invoke ("GoToMenu", 5f);
+    }
+
+    void GameOverText () {
+        GameOver.instance.TriggerText ();
     }
 }

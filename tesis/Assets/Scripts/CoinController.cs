@@ -11,12 +11,12 @@ public class CoinController : MonoBehaviour {
         }
     }
 
-    void Update() {
-        if(MainCharacterController.instance.IsImpulseUp() && transform.position.y < 2f) {
-            transform.parent.GetComponent<MoveDown>().enabled = false;
-            transform.position = Vector3.MoveTowards(transform.position, MainCharacterController.instance.GetPosition() + (Vector3.up * .1f), 5 * Time.deltaTime);
+    void Update () {
+        if (MainCharacterController.instance.IsImpulseUp () && transform.position.y < 2f) {
+            transform.parent.GetComponent<MoveDown> ().enabled = false;
+            transform.position = Vector3.MoveTowards (transform.position, MainCharacterController.instance.GetPosition () + (Vector3.up * .1f), 5 * Time.deltaTime);
         } else {
-            transform.parent.GetComponent<MoveDown>().enabled = true;
+            transform.parent.GetComponent<MoveDown> ().enabled = true;
         }
     }
 }

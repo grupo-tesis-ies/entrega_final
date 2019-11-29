@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2287726255809836223}
   - component: {fileID: 2287726255809836220}
   - component: {fileID: 2287726255809836211}
-  - component: {fileID: 6511124774458346674}
   m_Layer: 0
   m_Name: x2 PowerUp
   m_TagString: Untagged
@@ -143,15 +142,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerUpName: x2Up
---- !u!114 &6511124774458346674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7826781158680093911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71edf144d7ad40c6a966209aa472329, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
