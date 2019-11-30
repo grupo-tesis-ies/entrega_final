@@ -20,6 +20,8 @@ public class OnGameSounds : MonoBehaviour {
 
     public AudioSource camHitClip;
 
+    public AudioSource buttonSound;
+
     void Awake () {
         if (instance == null) {
             instance = this;
@@ -29,30 +31,50 @@ public class OnGameSounds : MonoBehaviour {
     }
 
     public void PlayBranchHit () {
-        branchHitClip.Play();
+        if (SoundManager.instance.IsMusicOn ()) {
+            branchHitClip.Play ();
+        }
     }
 
     public void PlayLoseCoin () {
-        loseCoinClip.Play();
+        if (SoundManager.instance.IsMusicOn ()) {
+            loseCoinClip.Play ();
+        }
     }
 
     public void PlayGotCoin () {
-        coinClip.Play();
+        if (SoundManager.instance.IsMusicOn ()) {
+            coinClip.Play ();
+        }
     }
 
     public void PlayLevelCompleted () {
-        finishClip.Play();
+        if (SoundManager.instance.IsMusicOn ()) {
+            finishClip.Play ();
+        }
     }
 
     public void PlayBerriesHit () {
-        berriesHitClip.Play();
+        if (SoundManager.instance.IsMusicOn ()) {
+            berriesHitClip.Play ();
+        }
     }
 
-    public void PlayCamHit() {
-        camHitClip.Play();
+    public void PlayCamHit () {
+        if (SoundManager.instance.IsMusicOn ()) {
+            camHitClip.Play ();
+        }
     }
 
     public void PlayGotPowerUp () {
-        powerUpClip.Play();
+        if (SoundManager.instance.IsMusicOn ()) {
+            powerUpClip.Play ();
+        }
+    }
+
+    public void PlayButton () {
+        if (SoundManager.instance.IsMusicOn ()) {
+            buttonSound.Play ();
+        }
     }
 }

@@ -43,6 +43,7 @@ public class GameEvents : MonoBehaviour {
             Invoke ("FadeIn", 1f);
             Invoke ("GoToMenu", 3f);
         } else if (GameConstants.SCENE_MENU.Equals (activeScene)) {
+            SoundManager.instance.StartMusic ();
             TitleBoard.instance.TriggerTitleBoard ();
             OnMenuSounds.instance.PlayBoard ();
             BlackController.instance.gameObject.SetActive (false);
@@ -212,11 +213,21 @@ public class GameEvents : MonoBehaviour {
     }
 
     public void Finished () {
+        ObjectsFactory.instance.StopProducing ();
+        ScoreManager.instance.StopCounting ();
+        MainCharacterController.instance.SetMoving (true);
+        MainCharacterController.instance.SetPlaying (false);
+        MainCharacterController.instance.SetSwipe (false);
+
         if ("story".Equals (gameMode)) {
             FinishedStory ();
+            GameFinishControl.instance.FinishedStoryMode ();
         } else {
             FinishedTrack ();
+            GameFinishControl.instance.FinishedTimeMode ();
         }
+
+        Invoke ("PlayFinishClip", 2f);
     }
 
     public void FinishedStory () {
@@ -238,17 +249,13 @@ public class GameEvents : MonoBehaviour {
             }
             PlayerPrefs.SetInt ("storyMode", 1);
             UpdateCoins ();
-
-            BlackController.instance.gameObject.SetActive (true);
-            BlackController.instance.FadeIn ();
-            MainCharacterController.instance.SetPlaying (false);
-            Invoke ("PlayFinishClip", 2f);
         }
     }
 
     void UpdateCoins () {
         int coins = PlayerPrefs.GetInt ("coinsCount", 0);
-        PlayerPrefs.SetInt ("coinsCount", coins + ScoreManager.instance.GetCoinsCount ());
+        int chrono = PlayerPrefs.GetInt ("chronoCount", 0);
+        PlayerPrefs.SetInt ("coinsCount", coins + ScoreManager.instance.GetChronoCount () + ScoreManager.instance.GetCoinsCount ());
         PlayerPrefs.Save ();
     }
 
@@ -262,16 +269,14 @@ public class GameEvents : MonoBehaviour {
                 });
         }
 
+        int chrono = PlayerPrefs.GetInt ("chronoCount", 0);
+        PlayerPrefs.SetInt ("chronoCount", chrono + ScoreManager.instance.GetChronoCount ());
+        PlayerPrefs.Save ();
         UpdateCoins ();
-        BlackController.instance.gameObject.SetActive (true);
-        BlackController.instance.FadeIn ();
-        MainCharacterController.instance.SetPlaying (false);
-        Invoke ("PlayFinishClip", 2f);
     }
 
     void PlayFinishClip () {
         OnGameSounds.instance.PlayLevelCompleted ();
-        Invoke ("GoToMenu", 5f);
     }
 
     void GoToMenu () {

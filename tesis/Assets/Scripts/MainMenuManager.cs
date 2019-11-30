@@ -19,14 +19,21 @@ public class MainMenuManager : MonoBehaviour {
     public GameObject menuCanvas;
     public GameObject configCanvas;
     public GameObject modeCanvas;
+
     public GameObject shopFirstCanvas;
     public GameObject shopSecondCanvas;
+    public GameObject shopThirdCanvas;
     public GameObject titleParent;
     public GameObject difficultyCanvas;
+    public GameObject aboutCanvas;
+
     public AudioClip buttonSound;
 
     public Sprite soundEfxOn;
     public Sprite soundEfxOff;
+
+    public Sprite musicOn;
+    public Sprite musicOff;
 
     public Button endlessButton;
     public Button endlessMediumButton;
@@ -43,8 +50,13 @@ public class MainMenuManager : MonoBehaviour {
 
     private bool hasFinishedHistory;
 
-    public Text coinScore;
+    public Text firstScore;
     public Text secondScore;
+
+    public Text thirdScore;
+
+    public Image efxButtonImage;
+    public Image musicButtonImage;
 
     public void SelectGameMode () {
         if (hasFinishedHistory) {
@@ -63,12 +75,12 @@ public class MainMenuManager : MonoBehaviour {
     public void SwitchToDifficulty () {
         modeCanvas.SetActive (false);
         difficultyCanvas.SetActive (true);
-        if(PlayerPrefs.HasKey("medium")) {
+        if (PlayerPrefs.HasKey ("medium")) {
             endlessMediumButton.interactable = true;
         } else {
             endlessMediumButton.interactable = false;
         }
-        if(PlayerPrefs.HasKey("hard")) {
+        if (PlayerPrefs.HasKey ("hard")) {
             endlessHardButton.interactable = true;
         } else {
             endlessHardButton.interactable = false;
@@ -86,7 +98,19 @@ public class MainMenuManager : MonoBehaviour {
     public void SwitchToConfig () {
         menuCanvas.SetActive (false);
         titleParent.SetActive (false);
+        aboutCanvas.SetActive (false);
         configCanvas.SetActive (true);
+        if (SoundManager.instance.IsMusicOn ()) {
+            efxButtonImage.sprite = soundEfxOn;
+        } else {
+            efxButtonImage.sprite = soundEfxOff;
+        }
+
+        if (SoundManager.instance.IsBackgroundMusicOn ()) {
+            musicButtonImage.sprite = musicOn;
+        } else {
+            musicButtonImage.sprite = musicOff;
+        }
     }
 
     public void SwitchToMenu () {
@@ -94,6 +118,7 @@ public class MainMenuManager : MonoBehaviour {
         configCanvas.SetActive (false);
         shopFirstCanvas.SetActive (false);
         shopSecondCanvas.SetActive (false);
+        shopThirdCanvas.SetActive (false);
         menuCanvas.SetActive (true);
         titleParent.SetActive (true);
     }
@@ -102,11 +127,19 @@ public class MainMenuManager : MonoBehaviour {
         SoundManager.instance.PlaySingle (buttonSound);
     }
 
-    public void TriggerMusic (Image buttonImg) {
+    public void TriggerMusic () {
         if (SoundManager.instance.TriggerMusic ()) {
-            buttonImg.sprite = soundEfxOn;
+            efxButtonImage.sprite = soundEfxOn;
         } else {
-            buttonImg.sprite = soundEfxOff;
+            efxButtonImage.sprite = soundEfxOff;
+        }
+    }
+
+    public void TriggerBackgroundMusic () {
+        if (SoundManager.instance.TriggerBackgroundMusic ()) {
+            musicButtonImage.sprite = musicOn;
+        } else {
+            musicButtonImage.sprite = musicOff;
         }
     }
 
@@ -146,13 +179,24 @@ public class MainMenuManager : MonoBehaviour {
         titleParent.SetActive (false);
         shopFirstCanvas.SetActive (true);
         shopSecondCanvas.SetActive (false);
+        shopThirdCanvas.SetActive (false);
         int coins = PlayerPrefs.GetInt ("coinsCount", 0);
-        coinScore.text = coins.ToString ("D4");
+        firstScore.text = coins.ToString ("D4");
     }
 
     public void SwitchToSecondShop () {
+        menuCanvas.SetActive (false);
+        titleParent.SetActive (false);
+        shopFirstCanvas.SetActive (false);
+        shopSecondCanvas.SetActive (true);
+        shopThirdCanvas.SetActive (false);
         int coins = PlayerPrefs.GetInt ("coinsCount", 0);
         secondScore.text = coins.ToString ("D4");
+    }
+
+    public void SwitchToThirdShop () {
+        int coins = PlayerPrefs.GetInt ("coinsCount", 0);
+        thirdScore.text = coins.ToString ("D4");
         if (PlayerPrefs.HasKey ("medium")) {
             mediumModeButton.interactable = false;
             mediumModeButton.image.sprite = purchasedMediumMode;
@@ -192,8 +236,8 @@ public class MainMenuManager : MonoBehaviour {
 
         menuCanvas.SetActive (false);
         titleParent.SetActive (false);
-        shopFirstCanvas.SetActive (false);
-        shopSecondCanvas.SetActive (true);
+        shopSecondCanvas.SetActive (false);
+        shopThirdCanvas.SetActive (true);
     }
 
     public void BuySmallPouch () {
@@ -224,5 +268,10 @@ public class MainMenuManager : MonoBehaviour {
         PlayerPrefs.SetInt ("coinsCount", PlayerPrefs.GetInt ("coinsCount", 0) - 500);
         PlayerPrefs.SetString ("hard", "purchased");
         PlayerPrefs.Save ();
+    }
+
+    public void SwitchToAbout () {
+        configCanvas.SetActive (false);
+        aboutCanvas.SetActive (true);
     }
 }

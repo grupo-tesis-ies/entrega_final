@@ -28,6 +28,8 @@ public class ScoreManager : MonoBehaviour {
 
     private int metersToFinish;
 
+    private int chronoBonusCounter;
+
     void Awake () {
         if (instance == null) {
             instance = this;
@@ -44,6 +46,7 @@ public class ScoreManager : MonoBehaviour {
         instance.timeCounter = 0;
         instance.coinMultiplier = 1;
         instance.metersMultiplier = 1;
+        instance.chronoBonusCounter = 0;
 
         UpdateScore ();
         UpdateMeters ();
@@ -62,6 +65,11 @@ public class ScoreManager : MonoBehaviour {
     void Update () {
         if (instance.isCounting) {
             if (!isHistoryMode) {
+                if ((int) chronoBonusCounter == 10) {
+                    AddChrono ();
+                    chronoBonusCounter = 0;
+                }
+
                 timeCounter += Time.deltaTime;
                 UpdateTimer ();
             }
@@ -71,6 +79,7 @@ public class ScoreManager : MonoBehaviour {
             }
 
             metersCounter += Time.deltaTime * metersMultiplier;
+
             UpdateMeters ();
         }
     }
@@ -87,7 +96,7 @@ public class ScoreManager : MonoBehaviour {
         if (((int) (remainingTime - timeCounter)) <= 0) {
             isPlaying = false;
             isCounting = false;
-            GameEvents.instance.Lose();
+            GameEvents.instance.Lose ();
         } else {
             remainingTimeText.text = ((int) (remainingTime - timeCounter)).ToString ("D3") + "s";
         }
@@ -97,8 +106,13 @@ public class ScoreManager : MonoBehaviour {
         instance.isCounting = true;
     }
 
+    public void StopCounting () {
+        instance.isCounting = true;
+    }
+
     public void AddCoin () {
         score += GameParameters.instance.GetCoinsValue () * coinMultiplier;
+        chronoBonusCounter++;
 
         UpdateScore ();
     }
@@ -111,6 +125,7 @@ public class ScoreManager : MonoBehaviour {
 
     public void Hit () {
         score -= GameParameters.instance.GetCoinsLostOnCollision ();
+        chronoBonusCounter = 0;
         if (score < 0) {
             score = 0;
         }

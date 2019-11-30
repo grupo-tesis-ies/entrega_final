@@ -5,9 +5,13 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
     public AudioSource[] sources;
 
+    public AudioSource backgroundSource;
+
     public static SoundManager instance = null;
 
     private bool isPlaying = true;
+
+    private bool isPlayingBackground = true;
 
     void Awake () {
         if (instance == null) {
@@ -19,7 +23,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     public void PlaySingle (AudioClip clip) {
-        if(!instance.isPlaying) {
+        if (!instance.isPlaying) {
             return;
         }
 
@@ -33,7 +37,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     public void RandomizeSfx (params AudioClip[] clips) {
-        if(!instance.isPlaying) {
+        if (!instance.isPlaying) {
             return;
         }
 
@@ -44,5 +48,34 @@ public class SoundManager : MonoBehaviour {
     public bool TriggerMusic () {
         instance.isPlaying = !instance.isPlaying;
         return instance.isPlaying;
+    }
+
+    public bool IsMusicOn () {
+        return instance.isPlaying;
+    }
+
+    public bool IsBackgroundMusicOn () {
+        return backgroundSource.volume > 0f;
+    }
+
+    public void StartMusic () {
+        if (!backgroundSource.isPlaying) {
+            backgroundSource.Play ();
+        }
+        if (backgroundSource.volume == 0f && instance.isPlayingBackground) {
+            backgroundSource.volume = 0.1f;
+        }
+    }
+
+    public bool TriggerBackgroundMusic () {
+        instance.isPlayingBackground = !instance.isPlayingBackground;
+
+        if (!instance.isPlayingBackground) {
+            backgroundSource.volume = 0f;
+        } else {
+            backgroundSource.volume = 0.1f;
+        }
+
+        return instance.isPlayingBackground;
     }
 }
